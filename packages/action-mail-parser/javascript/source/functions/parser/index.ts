@@ -28,6 +28,8 @@ const parser = <T = any>(
         }
     }
 
+    console.log(tokens);
+
 
     const interpreted = {};
 
@@ -39,10 +41,11 @@ const parser = <T = any>(
             continue;
         }
 
-        const key = token.slice(0, indexOfColon).trim();
+        const key = token.slice(0, indexOfColon + 1).trim();
         const value = token.slice(indexOfColon).trim();
         interpreted[key] = value;
     }
+    console.log(interpreted);
 
 
     return interpreted as T;
