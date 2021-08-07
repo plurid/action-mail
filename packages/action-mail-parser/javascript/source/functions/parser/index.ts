@@ -36,13 +36,13 @@ const parser = <T = any>(
     for (const token of tokens) {
         const indexOfColon = token.indexOf(':');
 
-        if (indexOfColon !== -1) {
+        if (indexOfColon === -1) {
             interpreted[token] = true;
             continue;
         }
 
-        const key = token.slice(0, indexOfColon + 1).trim();
-        const value = token.slice(indexOfColon).trim();
+        const key = token.slice(0, indexOfColon).trim();
+        const value = token.slice(indexOfColon + 1).trim();
         interpreted[key] = value;
     }
     console.log(interpreted);
