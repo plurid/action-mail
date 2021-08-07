@@ -19,7 +19,9 @@ const parser = <T = any>(
                         captureIndexStart,
                         index,
                     );
-                    tokens.push(value);
+                    if (value) {
+                        tokens.push(value);
+                    }
                     captureIndexStart = undefined;
                 }
                 break;
@@ -30,16 +32,16 @@ const parser = <T = any>(
     const interpreted = {};
 
     for (const token of tokens) {
-        const split = token.split(':');
+        const indexOfColon = token.indexOf(':');
 
-        if (split.length === 2) {
-            const key = split[0].trim();
-            const value = split[1].trim();
-            interpreted[key] = value;
+        if (indexOfColon !== -1) {
+            interpreted[token] = true;
             continue;
         }
 
-        interpreted[token] = true;
+        const key = token.slice(0, indexOfColon).trim();
+        const value = token.slice(indexOfColon).trim();
+        interpreted[key] = value;
     }
 
 
