@@ -14,8 +14,11 @@
             "~functions/*": [
                 "source/functions/*"
             ],
-            "~utilities/*": [
-                "./source/utilities/*"
+            "~objects/*": [
+                "./source/objects/*"
+            ],
+            "~services/*": [
+                "./source/services/*"
             ],
         },
 
