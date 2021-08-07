@@ -1,5 +1,5 @@
 // #region module
-const parser = (
+const parser = <T = any>(
     data: string,
 ) => {
     const split = data.split('');
@@ -11,7 +11,7 @@ const parser = (
     for (const [index, character] of split.entries()) {
         switch (character) {
             case '{':
-                captureIndexStart = index;
+                captureIndexStart = index + 1;
                 break;
             case '}':
                 if (typeof captureIndexStart === 'number') {
@@ -42,7 +42,8 @@ const parser = (
         interpreted[token] = true;
     }
 
-    return interpreted;
+
+    return interpreted as T;
 }
 // #endregion module
 
