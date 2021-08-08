@@ -60,11 +60,11 @@ Consider the following example with a `jsx` `BuyWithoutAccount` button
 const mail = 'address@example.com';
 
 const requestSubject = encodeURIComponent(
-    `Hello from subject text`
+    `Hello from subject text`,
 );
 
 const requestBody = encodeURIComponent(
-    `Hello,\n\nfrom body text\n{using} an {action: mail} to {specify: entities} and {values}.\n`
+    `Hello,\n\nfrom body text\n{using} an {action: mail} to {specify: entities} and {values}.\n`,
 );
 
 const BuyWithoutAccount = () => (
@@ -111,7 +111,7 @@ An useful for selling `action mail` could use the following `subject` and `body`
 
 ``` typescript
 const requestSubject = encodeURIComponent(
-    `[Order] Product x1 for $100`
+    `[Order] Product x1 for $100`,
 );
 
 const requestBody = encodeURIComponent(
@@ -135,7 +135,8 @@ Deliver with the following shipment details
 
 
 Thanks
-`);
+`,
+);
 ```
 
 which when parsed with the following settings
