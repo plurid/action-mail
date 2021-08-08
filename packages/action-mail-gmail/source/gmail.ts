@@ -1,17 +1,4 @@
 // #region module
-function handleHomePage() {
-    console.log('handleHomePage');
-}
-
-
-function handleShowSettings() {
-    console.log('handleShowSettings');
-}
-
-
-
-
-
 const TRIGGER_NAME = 'handleNewEmails';
 
 // Maximum number of threads to process per run.
@@ -87,6 +74,8 @@ function handleMessage(
         parsed,
         endpoint,
     );
+
+    message.markRead();
 }
 
 
