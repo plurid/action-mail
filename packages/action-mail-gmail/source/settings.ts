@@ -1,5 +1,5 @@
 // #region module
-function handleShowSettings() {
+function handleSettingsPage() {
     console.log('handleShowSettings');
 }
 // #endregion module
