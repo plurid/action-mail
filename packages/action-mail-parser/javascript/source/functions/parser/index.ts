@@ -3,39 +3,20 @@
     import {
         ParserOption,
     } from '~data/interfaces';
+
+    import {
+        negations,
+    } from '~data/constants';
+
+    import {
+        stringToCamelCase,
+    } from '~services/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-/**
- * Based on https://stackoverflow.com/a/2970667/6639124
- *
- * @param value
- * @returns
- */
-const stringToCamelCase = (
-    value: string,
-) => {
-    return value
-        .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-            return index === 0
-                ? word.toLowerCase()
-                : word.toUpperCase();
-        })
-        .replace(/\s+/g, '');
-}
-
-
-const negations = [
-    /^no\s/,
-    /^not\s/,
-    /^none\s/,
-    /^don't\s/,
-    /^do not\s/,
-];
-
 const valueOfToken = (
     token: string,
     options?: Partial<ParserOption>,
