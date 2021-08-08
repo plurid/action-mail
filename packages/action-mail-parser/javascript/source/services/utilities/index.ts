@@ -2,10 +2,13 @@
 export const computeKeysStringFromObject = (
     object: any,
 ) => {
-    let keys = Object
-        .keys(object)
-        .sort()
-        .reduce((accumulator, value) => accumulator + value);
+    const keysList = [];
+
+    for (const key in object) {
+        keysList.push(key);
+    }
+
+    const keys = keysList.sort().join('');
 
     return keys;
 }
