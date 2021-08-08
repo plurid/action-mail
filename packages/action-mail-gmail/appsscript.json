@@ -1,0 +1,42 @@
+{
+  "timeZone": "America/New_York",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Gmail",
+        "version": "v1",
+        "serviceId": "gmail"
+      }
+    ]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "addOns": {
+    "common": {
+      "name": "Action Mail",
+      "logoUrl": "https://plurid.com/android-chrome-512x512.png",
+      "homepageTrigger": {
+        "runFunction": "handleHomePage"
+      },
+      "universalActions": [
+        {
+          "label": "Settings",
+          "runFunction": "handleShowSettings"
+        }
+      ],
+      "openLinkUrlPrefixes": [],
+      "layoutProperties": {
+        "primaryColor": "#494f5a",
+        "secondaryColor": "#494f5a"
+      }
+    },
+    "gmail": {
+      "contextualTriggers": [
+        {
+          "unconditional": {},
+          "onTriggerFunction": "handleGmailContext"
+        }
+      ]
+    }
+  }
+}

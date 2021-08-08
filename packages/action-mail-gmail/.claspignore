@@ -1,0 +1,13 @@
+configurations/**
+node_modules
+node_modules/**
+node_modules/**/.*/**
+node_modules/**/.*
+environment/**
+scripts/**
+source/**
+.npmrc
+package.json
+yarn.lock
+tsconfig.json
+README.md

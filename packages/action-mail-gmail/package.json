@@ -1,0 +1,65 @@
+{
+    "name": "@plurid/action-mail-gmail",
+    "version": "0.0.0-0",
+    "description": "Action Mail for Gmail",
+    "keywords": [
+        "action",
+        "mail",
+        "gmail"
+    ],
+    "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
+    "license": "SEE LICENSE IN LICENSE",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/plurid/action-mail"
+    },
+    "bugs": {
+        "email": "source@plurid.com",
+        "url": "https://github.com/plurid/action-mail/issues"
+    },
+    "homepage": "https://github.com/plurid/action-mail/blob/master/packages/action-mail-gmail/README.md",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=12",
+        "npm": ">=6"
+    },
+    "main": "distribution/index.js",
+    "module": "distribution/index.es.js",
+    "typings": "distribution/index.d.ts",
+    "files": [
+        "distribution"
+    ],
+    "scripts": {
+        "clean": "rimraf ./distribution",
+        "lint": "eslint ./source --ext .ts,.tsx",
+        "test": "jest ./source --config ./configurations/jest.config.js --rootDir ./",
+        "start": "node distribution/index.js",
+        "start.local": "deon environment ./environment/.env.local.deon -- node distribution/index.js",
+        "build.development": "yarn clean && rollup -c ./scripts/rollup.config.js --environment ENV_MODE:local",
+        "build.production": "rollup -c ./scripts/rollup.config.js --environment ENV_MODE:production",
+        "build": "yarn clean && yarn build.production",
+        "prepublishOnly": "yarn build"
+    },
+    "devDependencies": {
+        "@plurid/deon": "^0.0.0-4",
+        "@types/jest": "^26.0.24",
+        "@types/node": "^16.4.2",
+        "@typescript-eslint/eslint-plugin": "^4.28.4",
+        "@typescript-eslint/parser": "^4.28.4",
+        "@zerollup/ts-transform-paths": "^1.7.18",
+        "eslint": "^7.31.0",
+        "jest": "^27.0.6",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.54.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-typescript2": "^0.30.0",
+        "ts-jest": "^27.0.4",
+        "ts-node": "^10.1.0",
+        "ttypescript": "^1.5.12",
+        "typescript": "^4.3.5",
+        "typescript-transform-paths": "^3.1.0"
+    }
+}
