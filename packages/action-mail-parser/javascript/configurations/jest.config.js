@@ -34,4 +34,10 @@ module.exports = {
         'source/*.{js,ts}'
     ],
     testTimeout: 30000,
+    moduleNameMapper: {
+        "data/(.*)": "<rootDir>/source/data/$1",
+        "functions/parser": "<rootDir>/source/functions/parser",
+        "objects/(.*)": "<rootDir>/source/objects/$1",
+        "services/(.*)": "<rootDir>/source/services/$1",
+    },
 };
