@@ -2,6 +2,7 @@
 export interface RegistryEntry {
     type: string;
     shape: Record<string, 'string' | 'boolean'>;
+    groupsLength?: number;
 };
 
 export interface RegistryParse {

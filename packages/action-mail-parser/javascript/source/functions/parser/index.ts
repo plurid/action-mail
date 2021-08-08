@@ -9,23 +9,33 @@
 
 
 // #region module
+const negations = [
+    /^no\s/,
+    /^not\s/,
+    /^none\s/,
+    /^don't\s/,
+    /^do not\s/,
+];
+
 const valueOfToken = (
     token: string,
 ) => {
     const indexOfColon = token.indexOf(':');
 
     if (indexOfColon === -1) {
+        let key = token.trim();
         let value = true;
 
-        const negations = [
-            'no',
-            'none',
-            'don\'t',
-            'do not',
-        ];
+        for (const negation of negations) {
+            if (key.match(negation)) {
+                key = key.replace(negation, '');
+                value = false;
+                break;
+            }
+        }
 
         return {
-            key: token,
+            key,
             value,
         };
     }
