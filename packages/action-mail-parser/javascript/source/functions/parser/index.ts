@@ -1,7 +1,7 @@
 // #region imports
     // #region external
     import {
-        ParserOption,
+        ParserOptions,
     } from '~data/interfaces';
 
     import {
@@ -19,7 +19,7 @@
 // #region module
 const valueOfToken = (
     token: string,
-    options?: Partial<ParserOption>,
+    options?: Partial<ParserOptions>,
 ) => {
     const indexOfColon = token.indexOf(':');
 
@@ -62,7 +62,7 @@ const valueOfToken = (
 
 const parser = <T = any>(
     data: string,
-    options?: Partial<ParserOption>,
+    options?: Partial<ParserOptions>,
 ) => {
     const split = data.split('');
     const tokens: string[] = [];

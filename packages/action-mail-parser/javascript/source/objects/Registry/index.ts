@@ -3,7 +3,7 @@
     import {
         RegistryEntry,
         RegistryParse,
-        ParserOption,
+        ParserOptions,
     } from '~data/interfaces';
 
     import parser from '~functions/parser';
@@ -34,7 +34,7 @@ class Registry {
 
     public parse(
         data: string,
-        options?: Partial<ParserOption>,
+        options?: Partial<ParserOptions>,
     ): RegistryParse | undefined {
         const values = parser(
             data,
