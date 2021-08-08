@@ -30,13 +30,6 @@
         "secondaryColor": "#494f5a"
       }
     },
-    "gmail": {
-      "contextualTriggers": [
-        {
-          "unconditional": {},
-          "onTriggerFunction": "handleGmailContext"
-        }
-      ]
-    }
+    "gmail": {}
   }
 }
