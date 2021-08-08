@@ -3,6 +3,7 @@
     import {
         RegistryEntry,
         RegistryParse,
+        ParserOption,
     } from '~data/interfaces';
 
     import parser from '~functions/parser';
@@ -33,8 +34,12 @@ class Registry {
 
     public parse(
         data: string,
+        options?: Partial<ParserOption>,
     ): RegistryParse | undefined {
-        const values = parser(data);
+        const values = parser(
+            data,
+            options,
+        );
 
         const valuesKeys = computeKeysStringFromObject(values);
 

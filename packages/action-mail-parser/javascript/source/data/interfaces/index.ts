@@ -8,4 +8,10 @@ export interface RegistryParse {
     type: string;
     values: any;
 };
+
+
+export interface ParserOption {
+    spacer: string;
+    groupsKey: string;
+}
 // #endregion module
