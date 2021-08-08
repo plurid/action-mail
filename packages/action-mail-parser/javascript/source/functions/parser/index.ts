@@ -9,6 +9,25 @@
 
 
 // #region module
+/**
+ * Based on https://stackoverflow.com/a/2970667/6639124
+ *
+ * @param value
+ * @returns
+ */
+const stringToCamelCase = (
+    value: string,
+) => {
+    return value
+        .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+            return index === 0
+                ? word.toLowerCase()
+                : word.toUpperCase();
+        })
+        .replace(/\s+/g, '');
+}
+
+
 const negations = [
     /^no\s/,
     /^not\s/,
@@ -19,6 +38,7 @@ const negations = [
 
 const valueOfToken = (
     token: string,
+    options?: Partial<ParserOption>,
 ) => {
     const indexOfColon = token.indexOf(':');
 
@@ -34,13 +54,22 @@ const valueOfToken = (
             }
         }
 
+        if (options?.camelCaseKeys) {
+            key = stringToCamelCase(key);
+        }
+
         return {
             key,
             value,
         };
     }
 
-    const key = token.slice(0, indexOfColon).trim();
+
+    let key = token.slice(0, indexOfColon).trim();
+    if (options?.camelCaseKeys) {
+        key = stringToCamelCase(key);
+    }
+
     const value = token.slice(indexOfColon + 1).trim();
 
     return {
@@ -101,7 +130,10 @@ const parser = <T = any>(
                     const {
                         key,
                         value,
-                    } = valueOfToken(item);
+                    } = valueOfToken(
+                        item,
+                        options,
+                    );
 
                     groups[groupIndex][key] = value;
                 }
@@ -115,7 +147,10 @@ const parser = <T = any>(
         const {
             key,
             value,
-        } = valueOfToken(token);
+        } = valueOfToken(
+            token,
+            options,
+        );
         interpreted[key] = value;
     }
 

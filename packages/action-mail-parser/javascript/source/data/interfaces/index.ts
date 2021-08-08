@@ -14,5 +14,6 @@ export interface RegistryParse {
 export interface ParserOption {
     spacer: string;
     groupsKey: string;
+    camelCaseKeys: boolean;
 }
 // #endregion module
