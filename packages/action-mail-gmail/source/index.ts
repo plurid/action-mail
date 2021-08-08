@@ -68,7 +68,7 @@ function getUnreadMails() {
 
 
 function handleMessage(
-    message,
+    message: GoogleAppsScript.Gmail.GmailMessage,
 ) {
     const sender = message.getFrom();
     const subject = message.getSubject();
@@ -91,10 +91,10 @@ function handleMessage(
 
 
 function notifyActionMail (
-    data,
-    endpoint,
+    data: any,
+    endpoint: string,
 ) {
-    const options = {
+    const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
         'method' : 'post',
         'contentType': 'application/json',
         'payload' : JSON.stringify(data),
