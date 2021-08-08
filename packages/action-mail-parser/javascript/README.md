@@ -40,6 +40,7 @@ An user could desire to be `accountless` and at the same time be interested in a
 + [Usage](#usage)
     + [Dolphin example](#dolphin-example)
     + [World example](#world-example)
+    + [Advanced](#advanced)
 + [Packages](#packages)
 + [Codeophon](#codeophon)
 
@@ -48,7 +49,7 @@ An user could desire to be `accountless` and at the same time be interested in a
 ## Usage
 
 
-In-browser `action mail`s are composed on the client-side using an anchor `a` tag with the `href` attribute set to `mailto`, where the query values `subject` and `body` are `encodeURIComponent` strings with the text interspersing the `action mail` syntax.
+In-browser `action mail`s are composed on the client-side using an anchor `a` tag with the `href` attribute set to `mailto`, where the query values of `subject` and `body` are `encodeURIComponent` strings with the text interspersing the `action mail` syntax.
 
 
 ### Dolphin example
@@ -101,7 +102,7 @@ After the mail reaches the destination, it will be parsed and the following data
 
 The data structure can then be used to `POST` an API endpoint which will take care of responding accordingly to the `action mail`.
 
-The mail client add-ons take care of parsing and calling the adequate API endpoint.
+The mail client add-ons take care of parsing and calling the adequate API endpoint, with the appropriate authorization token.
 
 
 ### World example
@@ -110,7 +111,7 @@ An useful for selling `action mail` could use the following `subject` and `body`
 
 ``` typescript
 const requestSubject = encodeURIComponent(
-    `[Order] Product x1 - $100`
+    `[Order] Product x1 for $100`
 );
 
 const requestBody = encodeURIComponent(
@@ -164,6 +165,36 @@ obtains the data structure
             "product": "specifications"
         }
     ]
+}
+```
+
+The user of the service only has to complete the `name`, `country`, `city`, `street` fields, or they could be automatically completed with predefined values if they also use the `action mail` mail client.
+
+
+### Advanced
+
+The parser options are
+
+``` typescript
+interface ParserOptions {
+    /**
+     * Delimiting string between multiple fields within the same `action mail` group
+     *
+     * e.g. `{one: two · three: four}` with `·` as spacer.
+     */
+    spacer: string;
+
+    /**
+     * The name of the groups key.
+     *
+     * Default: `'groups'`
+     */
+    groupsKey: string;
+
+    /**
+     * Use `camelCase` for all the keys.
+     */
+    camelCaseKeys: boolean;
 }
 ```
 
