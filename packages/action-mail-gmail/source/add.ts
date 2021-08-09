@@ -19,46 +19,59 @@ function submitAddPage() {
 
 function buildAddCard() {
     const banner = CardService.newImage()
-      .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
+        .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
 
 
     const onChangeAction = CardService.newAction().setFunctionName('onChangeAddPage');
 
+
     const toMail = CardService.newTextInput()
-        .setFieldName('toMail')
+        .setFieldName("toMail")
         .setOnChangeAction(onChangeAction)
-        .setTitle('to mail');
+        .setTitle("to mail");
 
     const endpoint = CardService.newTextInput()
-        .setFieldName('endpoint')
+        .setFieldName("endpoint")
         .setOnChangeAction(onChangeAction)
-        .setTitle('endpoint');
+        .setTitle("endpoint");
 
-    var endpointType = CardService.newSelectionInput()
+    const endpointType = CardService.newSelectionInput()
         .setType(CardService.SelectionInputType.RADIO_BUTTON)
-        .setTitle('endpoint type')
-        .setFieldName('endpointType')
+        .setTitle("endpoint type")
+        .setFieldName("endpointType")
         .setOnChangeAction(onChangeAction)
-        .addItem('REST', 'endpointTypeRest', true)
-        .addItem('GraphQL', 'endpointTypeGraphql', false);
+        .addItem("REST", "endpointTypeRest", true)
+        .addItem("GraphQL", "endpointTypeGraphql", false);
 
-    const spacer = CardService.newTextInput()
-        .setFieldName('spacer')
-        .setOnChangeAction(onChangeAction)
-        .setTitle('spacer');
 
     const token = CardService.newTextInput()
-        .setFieldName('token')
+        .setFieldName("token")
         .setOnChangeAction(onChangeAction)
-        .setTitle('token');
+        .setTitle("token");
 
     const tokenType = CardService.newSelectionInput()
         .setType(CardService.SelectionInputType.RADIO_BUTTON)
-        .setTitle('token type')
-        .setFieldName('tokenType')
+        .setTitle("token type")
+        .setFieldName("tokenType")
         .setOnChangeAction(onChangeAction)
-        .addItem('payload', 'tokenTypePayload', true)
-        .addItem('bearer', 'tokenTypeBearer', false);
+        .addItem("payload", "tokenTypePayload", true)
+        .addItem("bearer", "tokenTypeBearer", false);
+
+
+
+    const spacer = CardService.newTextInput()
+        .setFieldName("spacer")
+        .setOnChangeAction(onChangeAction)
+        .setTitle("spacer");
+
+    const camelCaseKeys = CardService.newSelectionInput()
+        .setType(CardService.SelectionInputType.RADIO_BUTTON)
+        .setTitle("camel case keys")
+        .setFieldName("camelCaseKeys")
+        .setOnChangeAction(onChangeAction)
+        .addItem("yes", "camelCaseKeysYes", true)
+        .addItem("no", "camelCaseKeysNo", false);
+
 
     const addAction = CardService.newAction().setFunctionName('submitAddPage');
     const addButton = CardService.newImageButton()
@@ -71,9 +84,10 @@ function buildAddCard() {
         .addWidget(toMail)
         .addWidget(endpoint)
         .addWidget(endpointType)
-        .addWidget(spacer)
         .addWidget(token)
         .addWidget(tokenType)
+        .addWidget(spacer)
+        .addWidget(camelCaseKeys)
         .addWidget(addButton);
 
 
