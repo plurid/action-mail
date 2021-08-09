@@ -1,38 +1,5 @@
 // #region module
-const TRIGGER_NAME = 'handleNewEmails';
-
-// Maximum number of threads to process per run.
-const PAGE_SIZE = 150;
-
-const INTERVAL = 1;
-
-
-function InstallGmail() {
-    UninstallGmail();
-
-    // First run 2 mins after install
-    ScriptApp.newTrigger(TRIGGER_NAME)
-        .timeBased()
-        .at(new Date(new Date().getTime() + 1000 * 60 * 2))
-        .create();
-
-    // Run every 1 minute there after
-    ScriptApp.newTrigger(TRIGGER_NAME)
-        .timeBased().everyMinutes(INTERVAL).create();
-}
-
-
-function UninstallGmail() {
-    const triggers = ScriptApp.getProjectTriggers();
-
-    for (let i = 0; i < triggers.length; i++) {
-        if (triggers[i].getHandlerFunction() === TRIGGER_NAME) {
-            ScriptApp.deleteTrigger(triggers[i]);
-        }
-    }
-}
-
-function handleNewEmails() {
+function handleNewMails() {
     getUnreadMails();
 }
 
@@ -64,49 +31,6 @@ const getMailFromAddress = (
     }
 
     return match[1];
-}
-
-
-const cacheGet = (
-    key: string,
-    json: boolean = true,
-) => {
-    try {
-        const cache = CacheService.getUserCache();
-        const value = cache.get(key);
-        if (!value) {
-            return;
-        }
-
-        if (!json) {
-            return value;
-        }
-
-        return JSON.parse(value);
-    } catch (error) {
-        return;
-    }
-}
-
-const cacheSet = (
-    key: string,
-    value: any,
-    json: boolean = true,
-) => {
-    const cache = CacheService.getUserCache();
-    const cacheValue = json ? JSON.stringify(value) : value;
-    cache.put(key, cacheValue);
-}
-
-const cacheReset = () => {
-    const cache = CacheService.getUserCache();
-
-    const allConfigs = cacheGet('all-configs') || [];
-
-    cache.removeAll([
-        ...allConfigs,
-        'all-configs',
-    ]);
 }
 
 

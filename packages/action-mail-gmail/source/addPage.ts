@@ -15,7 +15,6 @@ const addPageFields = [
     'camelCaseKeys',
 ];
 
-const cacheAddKey = 'add-new-config';
 
 function onChangeAddPage(
     event: any,
@@ -31,45 +30,21 @@ function onChangeAddPage(
     console.log('onChangeAddPage', data);
 
     cacheSet(
-        cacheAddKey,
+        CACHE_ADD_CONFIG,
         data,
     );
 };
 
 
-function updateAllConfigs(
-    data: any,
-) {
-    let allConfigs = cacheGet(`all-configs`);
-
-    if (!allConfigs) {
-        cacheSet(
-            `all-configs`,
-            [data],
-        );
-        return;
-    }
-
-    cacheSet(
-        `all-configs`,
-        [
-            ...allConfigs,
-            data,
-        ],
-    );
-}
-
 function submitAddPage() {
-    let data = cacheGet(cacheAddKey);
-
-    const configName = `config-${data.toMail}`;
+    const newConfigData = cacheGet(CACHE_ADD_CONFIG);
+    const configName = `config-${newConfigData.toMail}`;
 
     cacheSet(
         configName,
-        data,
+        newConfigData,
     );
-
-    updateAllConfigs(configName);
+    cacheUpdateAllConfigs(configName);
 
     return handleHomePage();
 }
