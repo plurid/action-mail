@@ -83,10 +83,17 @@ function notifyActionMail (
     data: any,
     endpoint: string,
 ) {
+    const id = uuid() + uuid() + uuid();
+
+    const actionMail = {
+        id,
+        data,
+    };
+
     const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
-        'method' : 'post',
+        'method': 'post',
         'contentType': 'application/json',
-        'payload' : JSON.stringify(data),
+        'payload': JSON.stringify(actionMail),
     };
 
     const post = UrlFetchApp.fetch(endpoint, options);
