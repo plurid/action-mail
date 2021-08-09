@@ -36,9 +36,42 @@ function onChangeAddPage(
     );
 };
 
+
+function updateAllConfigs(
+    data: any,
+) {
+    let allConfigs = cacheGet(`all-configs`);
+
+    if (!allConfigs) {
+        cacheSet(
+            `all-configs`,
+            [data],
+        );
+        return;
+    }
+
+    cacheSet(
+        `all-configs`,
+        [
+            ...allConfigs,
+            data,
+        ],
+    );
+}
+
 function submitAddPage() {
     let data = cacheGet(cacheAddKey);
-    console.log('submitAddPage', data);
+
+    const configName = `config-${data.toMail}`;
+
+    cacheSet(
+        configName,
+        data,
+    );
+
+    updateAllConfigs(configName);
+
+    return handleHomePage();
 }
 
 
