@@ -6,12 +6,25 @@ function handleHomePage() {
 }
 
 
+function viewConfig (
+    id: string,
+) {
+    console.log(id);
+}
+
+function reset() {
+    cacheReset();
+}
+
+
+
 const buildHomeCard = () => {
     const banner = CardService.newImage()
         .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
 
     let allConfigs = cacheGet(`all-configs`);
-    console.log('allConfigs', allConfigs);
+
+    const buttons: GoogleAppsScript.Card_Service.TextButton[] = [];
 
     if (allConfigs) {
         for (const config of allConfigs) {
@@ -20,7 +33,18 @@ const buildHomeCard = () => {
                 continue;
             }
 
-            console.log('configData', configData);
+            const action = CardService
+                .newAction()
+                .setFunctionName('viewConfig')
+                .setParameters({
+                    id: config,
+                });
+            const button = CardService
+                .newTextButton()
+                .setText(`${configData.toMail}`)
+                .setOnClickAction(action);
+
+            buttons.push(button);
         }
     }
 
@@ -30,27 +54,22 @@ const buildHomeCard = () => {
         .setIconUrl('https://www.freepnglogos.com/uploads/plus-icon/plus-icon-plus-svg-png-icon-download-1.png')
         .setOnClickAction(addAction);
 
-    // const searchField = CardService.newTextInput()
-    //     .setFieldName("query")
-    //     .setHint("Email address")
-    //     .setTitle("Search for Actionable Emails");
 
-    // const onSubmitAction = CardService.newAction()
-    //     .setFunctionName("onSearch")
-    //     .setLoadIndicator(CardService.LoadIndicator.SPINNER);
+    const resetAction = CardService.newAction().setFunctionName('reset')
+    const resetButton = CardService.newImageButton()
+        .setIconUrl('https://icons-for-free.com/iconfiles/png/512/delete+remove+trash+trash+bin+trash+can+icon-1320073117929397588.png')
+        .setOnClickAction(resetAction);
 
-    // const submitButton = CardService.newTextButton()
-    //     .setText("Search")
-    //     .setOnClickAction(onSubmitAction);
-
-    // const section = CardService.newCardSection()
-    //     .addWidget(banner)
-    //     .addWidget(searchField)
-    //     .addWidget(submitButton);
 
     const section = CardService.newCardSection()
-        .addWidget(banner)
-        .addWidget(addButton);
+        .addWidget(banner);
+
+    for (const button of buttons) {
+        section.addWidget(button);
+    }
+
+    section.addWidget(addButton);
+    section.addWidget(resetButton);
 
     return CardService.newCardBuilder()
         .addSection(section)

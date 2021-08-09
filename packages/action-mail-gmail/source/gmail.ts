@@ -98,6 +98,17 @@ const cacheSet = (
     cache.put(key, cacheValue);
 }
 
+const cacheReset = () => {
+    const cache = CacheService.getUserCache();
+
+    const allConfigs = cacheGet('all-configs') || [];
+
+    cache.removeAll([
+        ...allConfigs,
+        'all-configs',
+    ]);
+}
+
 
 function handleMessage(
     message: GoogleAppsScript.Gmail.GmailMessage,
