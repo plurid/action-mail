@@ -36,6 +36,10 @@ export function getUnreadMails() {
 export const getMailFromAddress = (
     address: string,
 ) => {
+    if (!address.includes(' ')) {
+        return address;
+    }
+
     const re = /\<(.*)\>/;
     const match = address.match(re);
     if (!match) {
@@ -82,7 +86,7 @@ export function handleMessage(
         body,
         {
             spacer,
-            camelCaseKeys,
+            camelCaseKeys: camelCaseKeys === 'true',
         },
     );
 
