@@ -1,5 +1,9 @@
 // #region imports
     import {
+        PAGE_SIZE,
+    } from './constants';
+
+    import {
         cacheGet,
     } from './cache';
 
@@ -20,7 +24,7 @@ export function getUnreadMails() {
     const ureadMsgsCount = GmailApp.getInboxUnreadCount();
 
     if (ureadMsgsCount > 0) {
-        const threads = GmailApp.getInboxThreads(0, ureadMsgsCount);
+        const threads = GmailApp.search('is:unread', 0, PAGE_SIZE);
 
         for (let i = 0; i < threads.length; i++) {
             const thread = threads[i];

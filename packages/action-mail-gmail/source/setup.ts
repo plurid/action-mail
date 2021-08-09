@@ -1,8 +1,6 @@
 // #region module
 export const TRIGGER_NAME = 'handleNewMails';
 
-// Maximum number of threads to process per run.
-export const PAGE_SIZE = 150;
 
 export const INTERVAL = 2; // minutes
 
