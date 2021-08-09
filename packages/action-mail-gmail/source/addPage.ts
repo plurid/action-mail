@@ -5,15 +5,40 @@ function handleAddPage() {
 };
 
 
+const addPageFields = [
+    'toMail',
+    'endpoint',
+    'endpointType',
+    'token',
+    'tokenType',
+    'spacer',
+    'camelCaseKeys',
+];
+
+const cacheAddKey = 'add-new-config';
+
 function onChangeAddPage(
     event: any,
 ) {
-    if (event.formInput['toMail']) {
+    const data: any = {};
+
+    for (const field of addPageFields) {
+        if (event.formInput[field]) {
+            data[field] = event.formInput[field];
+        }
     }
 
+    console.log('onChangeAddPage', data);
+
+    cacheSet(
+        cacheAddKey,
+        data,
+    );
 };
 
 function submitAddPage() {
+    let data = cacheGet(cacheAddKey);
+    console.log('submitAddPage', data);
 }
 
 
@@ -40,8 +65,8 @@ function buildAddCard() {
         .setTitle("endpoint type")
         .setFieldName("endpointType")
         .setOnChangeAction(onChangeAction)
-        .addItem("REST", "endpointTypeRest", true)
-        .addItem("GraphQL", "endpointTypeGraphql", false);
+        .addItem("REST", "rest", true)
+        .addItem("GraphQL", "graphql", false);
 
 
     const token = CardService.newTextInput()
@@ -54,8 +79,8 @@ function buildAddCard() {
         .setTitle("token type")
         .setFieldName("tokenType")
         .setOnChangeAction(onChangeAction)
-        .addItem("payload", "tokenTypePayload", true)
-        .addItem("bearer", "tokenTypeBearer", false);
+        .addItem("payload", "payload", true)
+        .addItem("bearer", "bearer", false);
 
 
 
@@ -69,8 +94,8 @@ function buildAddCard() {
         .setTitle("camel case keys")
         .setFieldName("camelCaseKeys")
         .setOnChangeAction(onChangeAction)
-        .addItem("yes", "camelCaseKeysYes", true)
-        .addItem("no", "camelCaseKeysNo", false);
+        .addItem("yes", "true", true)
+        .addItem("no", "false", false);
 
 
     const addAction = CardService.newAction().setFunctionName('submitAddPage');
