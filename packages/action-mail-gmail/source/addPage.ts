@@ -1,11 +1,27 @@
+// #region imports
+    import {
+        CACHE_ADD_CONFIG,
+
+        cacheSet,
+        cacheGet,
+        cacheUpdateAllConfigs,
+    } from './cache';
+
+    import {
+        handleHomePage,
+    } from './homePage';
+// #endregion imports
+
+
+
 // #region module
-function handleAddPage() {
+export function handleAddPage() {
     const card = buildAddCard();
     return [card];
 };
 
 
-const addPageFields = [
+export const addPageFields = [
     'toMail',
     'endpoint',
     'endpointType',
@@ -16,7 +32,7 @@ const addPageFields = [
 ];
 
 
-function onChangeAddPage(
+export function onChangeAddPage(
     event: any,
 ) {
     const data: any = {};
@@ -36,7 +52,7 @@ function onChangeAddPage(
 };
 
 
-function submitAddPage() {
+export function submitAddPage() {
     const newConfigData = cacheGet(CACHE_ADD_CONFIG);
     const configName = `config-${newConfigData.toMail}`;
 
@@ -50,7 +66,7 @@ function submitAddPage() {
 }
 
 
-function buildAddCard() {
+export function buildAddCard() {
     const banner = CardService.newImage()
         .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
 

@@ -1,24 +1,32 @@
+// #region imports
+    import {
+        cacheGet,
+        cacheReset,
+    } from './cache';
+// #endregion imports
+
+
 // #region module
-function handleHomePage() {
+export function handleHomePage() {
     const card = buildHomeCard();
 
     return [card];
 }
 
 
-function viewConfig (
+export function viewConfig (
     id: string,
 ) {
     console.log(id);
 }
 
-function reset() {
+export function reset() {
     cacheReset();
 }
 
 
 
-const buildHomeCard = () => {
+export const buildHomeCard = () => {
     const banner = CardService.newImage()
         .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
 

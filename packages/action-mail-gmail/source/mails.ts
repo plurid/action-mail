@@ -1,10 +1,22 @@
+// #region imports
+    import {
+        cacheGet,
+    } from './cache';
+
+    import {
+        uuid,
+    } from './utilities';
+// #endregion imports
+
+
+
 // #region module
-function handleNewMails() {
+export function handleNewMails() {
     getUnreadMails();
 }
 
 
-function getUnreadMails() {
+export function getUnreadMails() {
     const ureadMsgsCount = GmailApp.getInboxUnreadCount();
 
     if (ureadMsgsCount > 0) {
@@ -21,7 +33,7 @@ function getUnreadMails() {
 }
 
 
-const getMailFromAddress = (
+export const getMailFromAddress = (
     address: string,
 ) => {
     const re = /\<(.*)\>/;
@@ -34,7 +46,7 @@ const getMailFromAddress = (
 }
 
 
-function handleMessage(
+export function handleMessage(
     message: GoogleAppsScript.Gmail.GmailMessage,
 ) {
     const to = getMailFromAddress(message.getTo());
@@ -110,7 +122,7 @@ function handleMessage(
 }
 
 
-function notifyActionMailGraphql(
+export function notifyActionMailGraphql(
     metadata: any,
     data: any,
     endpoint: string,
@@ -121,7 +133,7 @@ function notifyActionMailGraphql(
 }
 
 
-function notifyActionMailRest(
+export function notifyActionMailRest(
     metadata: any,
     data: any,
     endpoint: string,

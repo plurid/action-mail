@@ -1,12 +1,12 @@
 // #region module
-function handleSettingsPage() {
+export function handleSettingsPage() {
     const card = buildSettingsCard();
 
     return [card];
 }
 
 
-const buildSettingsCard = () => {
+export const buildSettingsCard = () => {
     const banner = CardService.newImage()
         .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
 

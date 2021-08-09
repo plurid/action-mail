@@ -1,10 +1,10 @@
 // #region module
-const CACHE_ALL_CONFIGS = 'all-configs';
-const CACHE_ADD_CONFIG = 'add-new-config';
+export const CACHE_ALL_CONFIGS = 'all-configs';
+export const CACHE_ADD_CONFIG = 'add-new-config';
 
 
 
-const cacheGet = (
+export const cacheGet = (
     key: string,
     json: boolean = true,
 ) => {
@@ -26,7 +26,7 @@ const cacheGet = (
 }
 
 
-const cacheSet = (
+export const cacheSet = (
     key: string,
     value: any,
     json: boolean = true,
@@ -37,7 +37,7 @@ const cacheSet = (
 }
 
 
-const cacheReset = () => {
+export const cacheReset = () => {
     const cache = CacheService.getUserCache();
 
     const allConfigs = cacheGet(CACHE_ALL_CONFIGS) || [];
@@ -49,7 +49,7 @@ const cacheReset = () => {
 }
 
 
-const cacheUpdateAllConfigs = (
+export const cacheUpdateAllConfigs = (
     config: string,
 ) => {
     let allConfigs = cacheGet(CACHE_ALL_CONFIGS);
