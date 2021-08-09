@@ -7,23 +7,24 @@ function handleHomePage() {
 
 
 const buildHomeCard = () => {
-    var banner = CardService.newImage()
-        .setImageUrl('https://storage.googleapis.com/gweb-cloudblog-publish/original_images/Workforce_segmentation_1.png');
+    const banner = CardService.newImage()
+        .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
 
-    var searchField = CardService.newTextInput()
+
+    const searchField = CardService.newTextInput()
         .setFieldName("query")
         .setHint("Email address")
         .setTitle("Search for Actionable Emails");
 
-    var onSubmitAction = CardService.newAction()
+    const onSubmitAction = CardService.newAction()
         .setFunctionName("onSearch")
         .setLoadIndicator(CardService.LoadIndicator.SPINNER);
 
-    var submitButton = CardService.newTextButton()
+    const submitButton = CardService.newTextButton()
         .setText("Search")
         .setOnClickAction(onSubmitAction);
 
-    var section = CardService.newCardSection()
+    const section = CardService.newCardSection()
         .addWidget(banner)
         .addWidget(searchField)
         .addWidget(submitButton);
