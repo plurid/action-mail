@@ -57,21 +57,43 @@ function getUnreadMails() {
 function handleMessage(
     message: GoogleAppsScript.Gmail.GmailMessage,
 ) {
+    const endpoint = '';
+    const spacer = '·'
+    const camelCaseKeys = true;
+
+
+    const id = uuid();
+    const parsedAt = Date.now();
+
+    const messageID = message.getId();
     const sender = message.getFrom();
     const subject = message.getSubject();
     const body = message.getPlainBody();
+    const date = message.getDate();
 
-    const parsed = parser(
+    const data = parser(
         body,
         {
-            spacer: '·',
-            camelCaseKeys: true,
+            spacer,
+            camelCaseKeys,
         },
     );
 
-    const endpoint = '';
+    const metadata = {
+        id,
+        parsedAt,
+        message: {
+            id: messageID,
+            sender,
+            subject,
+            body,
+            date,
+        },
+    };
+
     notifyActionMail(
-        parsed,
+        metadata,
+        data,
         endpoint,
     );
 
@@ -80,13 +102,12 @@ function handleMessage(
 
 
 function notifyActionMail (
+    metadata: any,
     data: any,
     endpoint: string,
 ) {
-    const id = uuid() + uuid() + uuid();
-
     const actionMail = {
-        id,
+        metadata,
         data,
     };
 
