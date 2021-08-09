@@ -54,12 +54,72 @@ function getUnreadMails() {
 }
 
 
+const getMailFromAddress = (
+    address: string,
+) => {
+    const re = /\<(.*)\>/;
+    const match = address.match(re);
+    if (!match) {
+        return;
+    }
+
+    return match[1];
+}
+
+
+const cacheGet = (
+    key: string,
+    json: boolean = true,
+) => {
+    try {
+        const cache = CacheService.getUserCache();
+        const value = cache.get(key);
+        if (!value) {
+            return;
+        }
+
+        if (!json) {
+            return value;
+        }
+
+        return JSON.parse(value);
+    } catch (error) {
+        return;
+    }
+}
+
+const cacheSet = (
+    key: string,
+    value: any,
+    json: boolean = true,
+) => {
+    const cache = CacheService.getUserCache();
+    const cacheValue = json ? JSON.stringify(value) : value;
+    cache.put(key, cacheValue);
+}
+
+
 function handleMessage(
     message: GoogleAppsScript.Gmail.GmailMessage,
 ) {
-    const endpoint = '';
-    const spacer = '·'
-    const camelCaseKeys = true;
+    const to = getMailFromAddress(message.getTo());
+    if (!to) {
+        return;
+    }
+
+    const config = cacheGet(`config-${to}`);
+    if (!config) {
+        return;
+    }
+
+    const {
+        endpoint,
+        endpointType,
+        spacer,
+        camelCaseKeys,
+        token,
+        tokenType,
+    } = config;
 
 
     const id = uuid();
@@ -91,30 +151,70 @@ function handleMessage(
         },
     };
 
-    notifyActionMail(
-        metadata,
-        data,
-        endpoint,
-    );
+    switch (endpointType) {
+        case 'graphql':
+            notifyActionMailGraphql(
+                metadata,
+                data,
+                endpoint,
+                token,
+                tokenType,
+            );
+            break;
+        case 'rest':
+            notifyActionMailRest(
+                metadata,
+                data,
+                endpoint,
+                token,
+                tokenType,
+            );
+    }
 
     message.markRead();
 }
 
 
-function notifyActionMail (
+function notifyActionMailGraphql(
     metadata: any,
     data: any,
     endpoint: string,
+    token: string,
+    tokenType: 'payload' | 'bearer',
+) {
+
+}
+
+
+function notifyActionMailRest(
+    metadata: any,
+    data: any,
+    endpoint: string,
+    token: string,
+    tokenType: 'payload' | 'bearer',
 ) {
     const actionMail = {
         metadata,
         data,
     };
 
+    if (tokenType === 'payload') {
+        actionMail['token'] = token;
+    }
+
+
+    let headers = {};
+
+    if (tokenType === 'bearer') {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+
     const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
         'method': 'post',
         'contentType': 'application/json',
         'payload': JSON.stringify(actionMail),
+        headers,
     };
 
     const post = UrlFetchApp.fetch(endpoint, options);
