@@ -74,6 +74,7 @@ export function handleMessage(
         camelCaseKeys,
         token,
         tokenType,
+        useAttachments,
     } = config;
 
 
@@ -85,6 +86,23 @@ export function handleMessage(
     const subject = message.getSubject();
     const body = message.getPlainBody();
     const date = message.getDate();
+    const attachments = message.getAttachments();
+    const attachmentsData = [];
+
+    if (useAttachments) {
+        for (const attachment of attachments) {
+            const name = attachment.getName();
+            const size = attachment.getSize();
+            const blob = attachment.copyBlob();
+
+            const attachmentData = {
+                name,
+                size,
+                blob,
+            };
+            attachmentsData.push(attachmentData);
+        }
+    }
 
     const data = parser(
         body,
@@ -103,6 +121,7 @@ export function handleMessage(
             subject,
             body,
             date,
+            attachments: attachmentsData,
         },
     };
 
