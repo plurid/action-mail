@@ -108,7 +108,7 @@ export function handleMessage(
         body,
         {
             spacer,
-            camelCaseKeys: camelCaseKeys === 'true',
+            camelCaseKeys,
         },
     );
 
