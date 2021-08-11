@@ -1,7 +1,11 @@
 // #region imports
     import {
+        Attachment,
+    } from './data/intefaces';
+
+    import {
         PAGE_SIZE,
-    } from './constants';
+    } from './data/constants';
 
     import {
         cacheGet,
@@ -86,21 +90,21 @@ export function handleMessage(
     const subject = message.getSubject();
     const body = message.getPlainBody();
     const date = message.getDate();
-    const attachments = message.getAttachments();
-    const attachmentsData = [];
+    const messageAttachments = message.getAttachments();
+    const attachments: Attachment[] = [];
 
     if (useAttachments) {
-        for (const attachment of attachments) {
-            const name = attachment.getName();
-            const size = attachment.getSize();
-            const blob = attachment.copyBlob();
+        for (const messageAttachment of messageAttachments) {
+            const name = messageAttachment.getName();
+            const size = messageAttachment.getSize();
+            const blob = messageAttachment.copyBlob();
 
-            const attachmentData = {
+            const attachment: Attachment = {
                 name,
                 size,
                 blob,
             };
-            attachmentsData.push(attachmentData);
+            attachments.push(attachment);
         }
     }
 
@@ -121,7 +125,7 @@ export function handleMessage(
             subject,
             body,
             date,
-            attachments: attachmentsData,
+            attachments,
         },
     };
 
