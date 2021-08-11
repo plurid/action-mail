@@ -1,19 +1,19 @@
 // #region imports
     import {
         Attachment,
-    } from '../data/interfaces';
+    } from '../../data/interfaces';
 
     import {
         PAGE_SIZE,
-    } from '../data/constants';
+    } from '../../data/constants';
 
     import {
         cacheGet,
-    } from '../services/cache';
+    } from '../../services/cache';
 
     import {
         uuid,
-    } from '../services/utilities';
+    } from '../../services/utilities';
 // #endregion imports
 
 
