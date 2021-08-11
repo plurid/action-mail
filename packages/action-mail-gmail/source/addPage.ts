@@ -27,6 +27,7 @@ export const addPageFields = [
     'endpointType',
     'token',
     'tokenType',
+    'useAttachments',
     'spacer',
     'camelCaseKeys',
 ];
@@ -38,12 +39,20 @@ export function onChangeAddPage(
     const data: any = {};
 
     for (const field of addPageFields) {
-        if (event.formInput[field]) {
-            data[field] = event.formInput[field];
+        let value = event.formInput[field];
+
+        if (value) {
+            if (value === 'true') {
+                value = true;
+            }
+
+            if (value === 'false') {
+                value = false;
+            }
+
+            data[field] = value;
         }
     }
-
-    console.log('onChangeAddPage', data);
 
     cacheSet(
         CACHE_ADD_CONFIG,
@@ -107,6 +116,14 @@ export function buildAddCard() {
         .addItem("bearer", "bearer", false);
 
 
+    const useAttachments = CardService.newSelectionInput()
+        .setType(CardService.SelectionInputType.RADIO_BUTTON)
+        .setTitle("use attachments")
+        .setFieldName("useAttachments")
+        .setOnChangeAction(onChangeAction)
+        .addItem("yes", "true", true)
+        .addItem("no", "false", false);
+
 
     const spacer = CardService.newTextInput()
         .setFieldName("spacer")
@@ -135,6 +152,7 @@ export function buildAddCard() {
         .addWidget(endpointType)
         .addWidget(token)
         .addWidget(tokenType)
+        .addWidget(useAttachments)
         .addWidget(spacer)
         .addWidget(camelCaseKeys)
         .addWidget(addButton);
