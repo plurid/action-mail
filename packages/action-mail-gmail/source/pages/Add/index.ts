@@ -5,11 +5,11 @@
         cacheSet,
         cacheGet,
         cacheUpdateAllConfigs,
-    } from './cache';
+    } from '../../services/cache';
 
     import {
         handleHomePage,
-    } from './homePage';
+    } from '../Home';
 // #endregion imports
 
 

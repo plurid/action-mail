@@ -1,9 +1,12 @@
 // #region imports
-export * from './addPage';
-export * from './cache';
-export * from './homePage';
-export * from './mails';
-export * from './settingsPage';
-export * from './setup';
-export * from './utilities';
+export * from './pages/Add';
+export * from './pages/Home';
+export * from './pages/Settings';
+
+export * from './logic/mails';
+export * from './logic/setup';
+
+export * from './services/cache';
+
+export * from './services/utilities';
 // #endregion imports
