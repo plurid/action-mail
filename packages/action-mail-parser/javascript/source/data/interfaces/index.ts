@@ -13,7 +13,7 @@ export interface RegistryParse<T = any> {
 
 export interface ParserOptions {
     /**
-     * Delimiting string between multiple fields within the same action mail group
+     * Delimiting string between multiple fields within the same action mail group.
      *
      * e.g. `{one: two · three: four}` with `·` as spacer.
      */
