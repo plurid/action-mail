@@ -4,6 +4,7 @@
         BANNER_ICON_URL,
         ADD_ICON_URL,
         DELETE_ICON_URL,
+        OBLITERATE_ICON_URL,
 
         PROPERTIES_ALL_CONFIGS,
     } from '~data/constants';
@@ -110,7 +111,7 @@ export const buildHomeCard = () => {
 
     const resetAction = CardService.newAction().setFunctionName('reset')
     const resetButton = CardService.newImageButton()
-        .setIconUrl(DELETE_ICON_URL)
+        .setIconUrl(OBLITERATE_ICON_URL)
         .setOnClickAction(resetAction);
 
 
