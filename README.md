@@ -25,7 +25,9 @@
 
 
 
-`action mail` provides a specification, parsing tools, and client mail utilities to obtain action entities and values from mails.
+`action mail` provides a specification, parsing tools, and client mail utilities to obtain `action entities` and/or `action values` from mails.
+
+`action entities` have `true` or `false` values. `action values` have string values.
 
 `action mail`s are intended to be used for `accountless interactions`.
 
