@@ -3,6 +3,8 @@
         propertiesGet,
         propertiesReset,
     } from '../../services/properties';
+
+    import MailDataCard from '../../components/MailDataCard';
 // #endregion imports
 
 
@@ -16,10 +18,19 @@ export function handleHomePage() {
 
 
 export function viewConfig (
-    id: string,
+    data: any,
 ) {
-    console.log(id);
+    const id = data.parameters.id;
+
+    const configData = propertiesGet(id);
+    if (!configData) {
+        return;
+    }
+
+    const card = MailDataCard(configData);
+    return [card];
 }
+
 
 export function reset() {
     propertiesReset();

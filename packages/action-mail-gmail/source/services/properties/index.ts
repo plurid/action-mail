@@ -55,7 +55,6 @@ export const propertiesUpdateAllConfigs = (
     config: string,
 ) => {
     let allConfigs = propertiesGet(PROPERTIES_ALL_CONFIGS);
-
     if (!allConfigs) {
         propertiesSet(
             PROPERTIES_ALL_CONFIGS,
@@ -66,11 +65,15 @@ export const propertiesUpdateAllConfigs = (
         return;
     }
 
+    const allConfigsUnique = new Set<string>([
+        ...allConfigs,
+        config,
+    ]);
+
     propertiesSet(
         PROPERTIES_ALL_CONFIGS,
         [
-            ...allConfigs,
-            config,
+            ...allConfigsUnique,
         ],
     );
 
