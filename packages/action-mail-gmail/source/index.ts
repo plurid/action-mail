@@ -7,6 +7,7 @@ export * from './logic/mails';
 export * from './logic/setup';
 
 export * from './services/cache';
+export * from './services/properties';
 
 export * from './services/utilities';
 // #endregion imports
