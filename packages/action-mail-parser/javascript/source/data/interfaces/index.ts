@@ -5,9 +5,9 @@ export interface RegistryEntry {
     groupsLength?: number;
 };
 
-export interface RegistryParse {
+export interface RegistryParse<T = any> {
     type: string;
-    values: any;
+    values: T;
 };
 
 

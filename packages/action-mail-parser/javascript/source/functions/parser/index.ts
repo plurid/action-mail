@@ -38,6 +38,11 @@ const parser = <T = any>(
         const start = grouper[0];
         const end = grouper[1];
 
+        if (!start || !end) {
+            console.log('action mail :: invalid groupers');
+            continue;
+        }
+
         const result = groupParse(
             start,
             end,

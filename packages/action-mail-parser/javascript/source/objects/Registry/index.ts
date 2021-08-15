@@ -35,7 +35,7 @@ class Registry {
     public parse<T = any>(
         data: string,
         options?: Partial<ParserOptions>,
-    ): RegistryParse | undefined {
+    ): RegistryParse<T> | undefined {
         const values = parser<T>(
             data,
             options,
