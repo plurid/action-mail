@@ -3,6 +3,7 @@
     import {
         BANNER_ICON_URL,
         ADD_ICON_URL,
+        EVENTS_ICON_URL,
         DELETE_ICON_URL,
         OBLITERATE_ICON_URL,
 
@@ -44,6 +45,13 @@ export function viewConfig (
 }
 
 
+export function viewEvents(
+    data: any,
+) {
+    const id = data.parameters.id;
+}
+
+
 export function deleteMail(
     data: any,
 ) {
@@ -80,6 +88,18 @@ export const getMails = () => {
                 .setText(`${configData.toMail}`)
                 .setOnClickAction(mailAction);
 
+
+            const eventsAction = CardService
+                .newAction()
+                .setFunctionName('viewEvents')
+                .setParameters({
+                    id: config,
+                });
+            const eventsButton = CardService.newImageButton()
+                .setIconUrl(EVENTS_ICON_URL)
+                .setOnClickAction(eventsAction);
+
+
             const deleteMailAction = CardService
                 .newAction()
                 .setFunctionName('deleteMail')
@@ -90,8 +110,10 @@ export const getMails = () => {
                 .setIconUrl(DELETE_ICON_URL)
                 .setOnClickAction(deleteMailAction);
 
+
             const section = CardService.newCardSection()
                 .addWidget(mailButton)
+                .addWidget(eventsButton)
                 .addWidget(deleteMailButton);
 
             mails.push(section);
