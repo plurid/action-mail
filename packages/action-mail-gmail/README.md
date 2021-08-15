@@ -64,7 +64,7 @@ const requestSubject = encodeURIComponent(
 );
 
 const requestBody = encodeURIComponent(
-    `Hello,\n\nfrom body text\n{using} an {action: mail} to {specify: entities} and {values}.\n`,
+    `Hello,\n\nfrom body text\n{using} an {action: mail} to {specify: values} and {entities}.\n`,
 );
 
 const BuyWithoutAccount = () => (
@@ -86,7 +86,7 @@ Subject: Hello from subject text
 Body: Hello,
 
 from body text
-{using} an {action: mail} to {specify: entities} and {values}.
+{using} an {action: mail} to {specify: values} and {entities}.
 ```
 
 After the mail reaches the destination, it will be parsed and the following data structures is obtained
@@ -95,8 +95,8 @@ After the mail reaches the destination, it will be parsed and the following data
 {
     "using": true,
     "action": "mail",
-    "specify": "entities",
-    "values": true
+    "specify": "values",
+    "entities": true
 }
 ```
 
@@ -107,7 +107,7 @@ The mail client add-ons take care of parsing and calling the adequate API endpoi
 
 ### World example
 
-An useful for selling `action mail` could use the following `subject` and `body`.
+A sales `action mail` could use the following `subject` and `body`.
 
 ``` typescript
 const requestSubject = encodeURIComponent(
@@ -120,7 +120,7 @@ const requestBody = encodeURIComponent(
 
 I would like to order
 
-    {Product: x1 · product: specifications}
+    {Product: x1 · specifications: of product}
 
 Please {send} me a payment link
 
@@ -142,10 +142,17 @@ Thanks
 which when parsed with the following settings
 
 ``` typescript
+const data = requestSubject + requestBody;
+
 const values = parser(
     data,
     {
         spacer: '·',
+        fielders: [
+            ['{', '}'],
+            ['[', ']'],
+        ],
+        camelCaseKeys: true,
     },
 );
 ```
@@ -154,6 +161,7 @@ obtains the data structure
 
 ``` json
 {
+    "order": true,
     "send": true,
     "generate": false,
     "name": "",
@@ -162,8 +170,8 @@ obtains the data structure
     "street": "",
     "groups": [
         {
-            "Product": "x1",
-            "product": "specifications"
+            "product": "x1",
+            "specifications": "of product"
         }
     ]
 }
@@ -179,7 +187,7 @@ The parser options are
 ``` typescript
 interface ParserOptions {
     /**
-     * Delimiting string between multiple fields within the same `action mail` group
+     * Delimiting string between multiple fields within the same action mail group.
      *
      * e.g. `{one: two · three: four}` with `·` as spacer.
      */
@@ -196,6 +204,15 @@ interface ParserOptions {
      * Use `camelCase` for all the keys.
      */
     camelCaseKeys: boolean;
+
+    /**
+     * Field start-end pairs.
+     *
+     * The first element marks field start, the second element marks field end.
+     *
+     * Default `[ ['{', '}'] ]`.
+     */
+    fielders: string[][];
 }
 ```
 
