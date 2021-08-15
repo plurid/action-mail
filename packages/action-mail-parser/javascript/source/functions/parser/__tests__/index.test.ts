@@ -1,5 +1,9 @@
 // #region imports
     // #region external
+    import {
+        defaultGroupers,
+    } from '~data/constants';
+
     import parser from '../index';
     // #endregion external
 // #endregion imports
@@ -56,6 +60,23 @@ describe('parser', () => {
         expect(Object.values(values).length).toBe(2);
         expect(values.two).toBe(true);
         expect(values.four).toBe(false);
+    });
+
+    it(`parses multiple groupers`, () => {
+        const data = `one {two} three [four]`;
+        const values = parser(
+            data,
+            {
+                groupers: [
+                    ...defaultGroupers,
+                    ['[', ']'],
+                ],
+            },
+        );
+
+        expect(Object.values(values).length).toBe(2);
+        expect(values.two).toBe(true);
+        expect(values.four).toBe(true);
     });
 });
 // #endregion module
