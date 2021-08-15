@@ -57,11 +57,7 @@ export function reset() {
 }
 
 
-
-export const buildHomeCard = () => {
-    const banner = CardService.newImage()
-        .setImageUrl(BANNER_ICON_URL);
-
+export const getMails = () => {
     let allConfigs = propertiesGet(PROPERTIES_ALL_CONFIGS);
 
     const mails: GoogleAppsScript.Card_Service.CardSection[] = [];
@@ -101,6 +97,17 @@ export const buildHomeCard = () => {
             mails.push(section);
         }
     }
+
+    return mails;
+}
+
+
+export const buildHomeCard = () => {
+    const banner = CardService.newImage()
+        .setImageUrl(BANNER_ICON_URL);
+
+
+    const mails = getMails();
 
 
     const addAction = CardService.newAction().setFunctionName('handleAddPage')
