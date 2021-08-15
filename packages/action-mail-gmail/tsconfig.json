@@ -8,14 +8,17 @@
 
         "baseUrl": ".",
         "paths": {
+            "~components/*": [
+                "./source/components/*"
+            ],
             "~data/*": [
                 "./source/data/*"
             ],
-            "~functions/*": [
-                "source/functions/*"
+            "~logic/*": [
+                "./source/logic/*"
             ],
-            "~objects/*": [
-                "./source/objects/*"
+            "~pages/*": [
+                "./source/pages/*"
             ],
             "~services/*": [
                 "./source/services/*"
