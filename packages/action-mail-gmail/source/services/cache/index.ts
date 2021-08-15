@@ -1,9 +1,15 @@
+// #region imports
+    // #region external
+    import {
+        CACHE_ALL_CONFIGS,
+        CACHE_ADD_CONFIG,
+    } from '~data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
 // #region module
-export const CACHE_ALL_CONFIGS = 'all-configs';
-export const CACHE_ADD_CONFIG = 'add-new-config';
-
-
-
 export const cacheGet = (
     key: string,
     json: boolean = true,

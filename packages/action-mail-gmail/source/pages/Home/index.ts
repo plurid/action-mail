@@ -4,6 +4,8 @@
         BANNER_ICON_URL,
         ADD_ICON_URL,
         DELETE_ICON_URL,
+
+        PROPERTIES_ALL_CONFIGS,
     } from '~data/constants';
 
     import {
@@ -59,7 +61,7 @@ export const buildHomeCard = () => {
     const banner = CardService.newImage()
         .setImageUrl(BANNER_ICON_URL);
 
-    let allConfigs = propertiesGet(`all-configs`);
+    let allConfigs = propertiesGet(PROPERTIES_ALL_CONFIGS);
 
     const mails: GoogleAppsScript.Card_Service.CardSection[] = [];
 
@@ -112,18 +114,23 @@ export const buildHomeCard = () => {
         .setOnClickAction(resetAction);
 
 
-    const section = CardService.newCardSection()
+    const topSection = CardService.newCardSection()
         .addWidget(banner);
 
+    const bottomSection = CardService.newCardSection()
+        .addWidget(addButton)
+        .addWidget(resetButton);
+
+
+    const card = CardService.newCardBuilder()
+        .addSection(topSection)
+
     for (const mail of mails) {
-        section.addWidget(mail);
+        card.addSection(mail);
     }
 
-    section.addWidget(addButton);
-    section.addWidget(resetButton);
+    card.addSection(bottomSection);
 
-    return CardService.newCardBuilder()
-        .addSection(section)
-        .build();
+    return card.build();
 }
 // #endregion module

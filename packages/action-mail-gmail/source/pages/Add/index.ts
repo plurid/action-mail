@@ -1,17 +1,20 @@
 // #region imports
     import {
         PROPERTIES_ADD_CONFIG,
+    } from '~data/constants';
 
+    import {
         propertiesSet,
         propertiesGet,
         propertiesUpdateAllConfigs,
-    } from '../../services/properties';
+    } from '~services/properties';
+
+    import MailDataCard from '~components/MailDataCard';
+
 
     import {
         handleHomePage,
     } from '../Home';
-
-    import MailDataCard from '../../components/MailDataCard';
 // #endregion imports
 
 

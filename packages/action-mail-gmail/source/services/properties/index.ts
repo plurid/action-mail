@@ -1,9 +1,15 @@
+// #region imports
+    // #region external
+    import {
+        PROPERTIES_ADD_CONFIG,
+        PROPERTIES_ALL_CONFIGS,
+    } from '~data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
 // #region module
-export const PROPERTIES_ALL_CONFIGS = 'all-configs';
-export const PROPERTIES_ADD_CONFIG = 'add-new-config';
-
-
-
 export const propertiesGet = (
     key: string,
     json: boolean = true,
