@@ -5,7 +5,7 @@
     } from '~data/interfaces';
 
     import {
-        defaultGroupers,
+        defaultFielders,
     } from '~data/constants';
     // #endregion external
 
@@ -24,22 +24,22 @@ const parser = <T = any>(
     data: string,
     options?: Partial<ParserOptions>,
 ) => {
-    const groupers = options?.groupers || defaultGroupers;
+    const fielders = options?.fielders || defaultFielders;
     const groupsKey = options?.groupsKey || 'groups';
 
-    if (groupers.length === 0) {
+    if (fielders.length === 0) {
         return;
     }
 
 
     let results: any = {};
 
-    for (const grouper of groupers) {
-        const start = grouper[0];
-        const end = grouper[1];
+    for (const fielder of fielders) {
+        const start = fielder[0];
+        const end = fielder[1];
 
         if (!start || !end) {
-            console.log('action mail :: invalid groupers');
+            console.log('action mail :: invalid fielders');
             continue;
         }
 

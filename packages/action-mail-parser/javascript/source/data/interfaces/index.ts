@@ -32,12 +32,12 @@ export interface ParserOptions {
     camelCaseKeys: boolean;
 
     /**
-     * Field grouping pairs.
+     * Field start-end pairs.
      *
-     * The first element marks group start, the second element marks group end.
+     * The first element marks field start, the second element marks field end.
      *
      * Default `[ ['{', '}'] ]`.
      */
-    groupers: string[][];
+    fielders: string[][];
 }
 // #endregion module

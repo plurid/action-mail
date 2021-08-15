@@ -1,5 +1,5 @@
 // #region module
-export const defaultGroupers = [
+export const defaultFielders = [
     ['{', '}'],
 ];
 

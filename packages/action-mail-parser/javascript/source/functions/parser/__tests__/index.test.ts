@@ -1,7 +1,7 @@
 // #region imports
     // #region external
     import {
-        defaultGroupers,
+        defaultFielders,
     } from '~data/constants';
 
     import parser from '../index';
@@ -62,13 +62,13 @@ describe('parser', () => {
         expect(values.four).toBe(false);
     });
 
-    it(`parses multiple groupers`, () => {
+    it(`parses multiple fielders`, () => {
         const data = `one {two} three [four]`;
         const values = parser(
             data,
             {
-                groupers: [
-                    ...defaultGroupers,
+                fielders: [
+                    ...defaultFielders,
                     ['[', ']'],
                 ],
             },
