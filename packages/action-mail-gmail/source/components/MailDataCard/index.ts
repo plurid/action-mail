@@ -1,3 +1,15 @@
+// #region imports
+    // #region external
+    import {
+        BANNER_ICON_URL,
+
+        ADD_ICON_URL,
+    } from '~data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
 // #region module
 const MailDataCard = (
     data?: any,
@@ -8,7 +20,7 @@ const MailDataCard = (
     const spacerValue = data?.spacer || '';
 
     const banner = CardService.newImage()
-        .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
+        .setImageUrl(BANNER_ICON_URL);
 
 
     const onChangeAction = CardService.newAction().setFunctionName('onChangeAddPage');
@@ -76,7 +88,7 @@ const MailDataCard = (
 
     const addAction = CardService.newAction().setFunctionName('submitAddPage');
     const addButton = CardService.newImageButton()
-        .setIconUrl('https://www.freepnglogos.com/uploads/plus-icon/plus-icon-plus-svg-png-icon-download-1.png')
+        .setIconUrl(ADD_ICON_URL)
         .setOnClickAction(addAction);
 
 
