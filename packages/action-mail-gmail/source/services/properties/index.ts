@@ -37,6 +37,14 @@ export const propertiesSet = (
 }
 
 
+export const propertiesDelete = (
+    key: string,
+) => {
+    const propertiesService = PropertiesService.getUserProperties();
+    propertiesService.deleteProperty(key);
+}
+
+
 export const propertiesReset = () => {
     const propertiesService = PropertiesService.getUserProperties();
     propertiesService.deleteAllProperties();
@@ -64,6 +72,10 @@ export const propertiesUpdateAllConfigs = (
             ...allConfigs,
             config,
         ],
+    );
+
+    propertiesDelete(
+        PROPERTIES_ADD_CONFIG,
     );
 }
 // #endregion module
