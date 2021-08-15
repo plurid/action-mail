@@ -30,5 +30,14 @@ export interface ParserOptions {
      * Use `camelCase` for all the keys.
      */
     camelCaseKeys: boolean;
+
+    /**
+     * Field grouping pairs.
+     *
+     * The first element marks group start, the second element marks group end.
+     *
+     * Default `[ ['{', '}'] ]`.
+     */
+    groupers: string[][];
 }
 // #endregion module

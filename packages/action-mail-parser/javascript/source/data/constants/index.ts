@@ -1,4 +1,9 @@
 // #region module
+export const defaultGroupers = [
+    ['{', '}'],
+];
+
+
 export const negations = [
     /^no\s/,
     /^not\s/,

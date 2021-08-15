@@ -5,145 +5,60 @@
     } from '~data/interfaces';
 
     import {
-        negations,
+        defaultGroupers,
     } from '~data/constants';
-
-    import {
-        stringToCamelCase,
-    } from '~services/utilities';
     // #endregion external
+
+
+    // #region internal
+    import {
+        groupParse,
+    } from './logic';
+    // #endregion internal
 // #endregion imports
 
 
 
 // #region module
-const valueOfToken = (
-    token: string,
-    options?: Partial<ParserOptions>,
-) => {
-    const indexOfColon = token.indexOf(':');
-
-    if (indexOfColon === -1) {
-        let key = token.trim();
-        let value = true;
-
-        for (const negation of negations) {
-            if (key.match(negation)) {
-                key = key.replace(negation, '');
-                value = false;
-                break;
-            }
-        }
-
-        if (options?.camelCaseKeys) {
-            key = stringToCamelCase(key);
-        }
-
-        return {
-            key,
-            value,
-        };
-    }
-
-
-    let key = token.slice(0, indexOfColon).trim();
-    if (options?.camelCaseKeys) {
-        key = stringToCamelCase(key);
-    }
-
-    const value = token.slice(indexOfColon + 1).trim();
-
-    return {
-        key,
-        value,
-    };
-}
-
-
 const parser = <T = any>(
     data: string,
     options?: Partial<ParserOptions>,
 ) => {
-    const split = data.split('');
-    const tokens: string[] = [];
+    const groupers = options?.groupers || defaultGroupers;
+    const groupsKey = options?.groupsKey || 'groups';
 
-
-    let captureIndexStart;
-
-    for (const [index, character] of split.entries()) {
-        switch (character) {
-            case '{':
-                captureIndexStart = index + 1;
-                break;
-            case '}':
-                if (typeof captureIndexStart === 'number') {
-                    const value = data.slice(
-                        captureIndexStart,
-                        index,
-                    );
-                    if (value) {
-                        tokens.push(value);
-                    }
-                    captureIndexStart = undefined;
-                }
-                break;
-        }
+    if (groupers.length === 0) {
+        return;
     }
 
 
-    const interpreted = {};
+    let results: any = {};
 
-    const groups: any[] = [];
-    let groupIndex = 0;
+    for (const grouper of groupers) {
+        const start = grouper[0];
+        const end = grouper[1];
 
-    for (const token of tokens) {
-        if (options?.spacer) {
-            const {
-                spacer,
-            } = options;
-
-            if (token.includes(spacer)) {
-                const split = token.split(spacer);
-
-                groups[groupIndex] = {};
-
-                for (const item of split) {
-                    const {
-                        key,
-                        value,
-                    } = valueOfToken(
-                        item,
-                        options,
-                    );
-
-                    groups[groupIndex][key] = value;
-                }
-
-                groupIndex += 1;
-
-                continue;
-            }
-        }
-
-        const {
-            key,
-            value,
-        } = valueOfToken(
-            token,
+        const result = groupParse(
+            start,
+            end,
+            data,
             options,
         );
-        interpreted[key] = value;
+
+        if (result[groupsKey]) {
+            result[groupsKey] = {
+                ...results[groupsKey],
+                ...result[groupsKey],
+            };
+        }
+
+        results = {
+            ...results,
+            ...result,
+        };
     }
 
-
-    if (groups.length > 0) {
-        const groupsKey = options?.groupsKey || 'groups';
-
-        interpreted[groupsKey] = groups;
-    }
-
-
-    return interpreted as T;
+    return results as T;
 }
 // #endregion module
 

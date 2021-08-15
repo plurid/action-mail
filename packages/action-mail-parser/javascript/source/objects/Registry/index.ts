@@ -32,14 +32,17 @@ class Registry {
         );
     }
 
-    public parse(
+    public parse<T = any>(
         data: string,
         options?: Partial<ParserOptions>,
     ): RegistryParse | undefined {
-        const values = parser(
+        const values = parser<T>(
             data,
             options,
         );
+        if (!values) {
+            return;
+        }
 
         const valuesKeys = computeKeysStringFromObject(values);
 
