@@ -17,6 +17,7 @@
     } from '~services/properties';
 
     import MailDataCard from '~components/MailDataCard';
+    import EventsCard from '~components/EventsCard';
     // #endregion external
 // #endregion imports
 
@@ -49,6 +50,10 @@ export function viewEvents(
     data: any,
 ) {
     const id = data.parameters.id;
+
+    const eventsCard = EventsCard(id);
+
+    return [eventsCard];
 }
 
 
