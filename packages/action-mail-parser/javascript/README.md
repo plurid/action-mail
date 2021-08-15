@@ -104,7 +104,7 @@ After the mail reaches the destination, it will be parsed and the following data
 
 The data structure can then be used to `POST` an API endpoint which will take care of responding accordingly to the `action mail`.
 
-The mail client add-ons take care of parsing and calling the adequate API endpoint, with the appropriate authorization token.
+The mail client add-ons handle parsing and calling the adequate API endpoint, with the appropriate authorization token.
 
 
 ### World example
