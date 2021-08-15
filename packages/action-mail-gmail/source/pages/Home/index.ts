@@ -1,10 +1,19 @@
 // #region imports
+    // #region external
+    import {
+        BANNER_ICON_URL,
+        ADD_ICON_URL,
+        DELETE_ICON_URL,
+    } from '~data/constants';
+
     import {
         propertiesGet,
         propertiesReset,
-    } from '../../services/properties';
+        propertiesDelete,
+    } from '~services/properties';
 
-    import MailDataCard from '../../components/MailDataCard';
+    import MailDataCard from '~components/MailDataCard';
+    // #endregion external
 // #endregion imports
 
 
@@ -32,6 +41,14 @@ export function viewConfig (
 }
 
 
+export function deleteMail(
+    data: any,
+) {
+    const id = data.parameters.id;
+    propertiesDelete(id);
+}
+
+
 export function reset() {
     propertiesReset();
 }
@@ -40,11 +57,11 @@ export function reset() {
 
 export const buildHomeCard = () => {
     const banner = CardService.newImage()
-        .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
+        .setImageUrl(BANNER_ICON_URL);
 
     let allConfigs = propertiesGet(`all-configs`);
 
-    const buttons: GoogleAppsScript.Card_Service.TextButton[] = [];
+    const mails: GoogleAppsScript.Card_Service.CardSection[] = [];
 
     if (allConfigs) {
         for (const config of allConfigs) {
@@ -53,39 +70,53 @@ export const buildHomeCard = () => {
                 continue;
             }
 
-            const action = CardService
+            const mailAction = CardService
                 .newAction()
                 .setFunctionName('viewConfig')
                 .setParameters({
                     id: config,
                 });
-            const button = CardService
+            const mailButton = CardService
                 .newTextButton()
                 .setText(`${configData.toMail}`)
-                .setOnClickAction(action);
+                .setOnClickAction(mailAction);
 
-            buttons.push(button);
+            const deleteMailAction = CardService
+                .newAction()
+                .setFunctionName('deleteMail')
+                .setParameters({
+                    id: config,
+                });
+            const deleteMailButton = CardService.newImageButton()
+                .setIconUrl(DELETE_ICON_URL)
+                .setOnClickAction(deleteMailAction);
+
+            const section = CardService.newCardSection()
+                .addWidget(mailButton)
+                .addWidget(deleteMailButton);
+
+            mails.push(section);
         }
     }
 
 
     const addAction = CardService.newAction().setFunctionName('handleAddPage')
     const addButton = CardService.newImageButton()
-        .setIconUrl('https://www.freepnglogos.com/uploads/plus-icon/plus-icon-plus-svg-png-icon-download-1.png')
+        .setIconUrl(ADD_ICON_URL)
         .setOnClickAction(addAction);
 
 
     const resetAction = CardService.newAction().setFunctionName('reset')
     const resetButton = CardService.newImageButton()
-        .setIconUrl('https://icons-for-free.com/iconfiles/png/512/delete+remove+trash+trash+bin+trash+can+icon-1320073117929397588.png')
+        .setIconUrl(DELETE_ICON_URL)
         .setOnClickAction(resetAction);
 
 
     const section = CardService.newCardSection()
         .addWidget(banner);
 
-    for (const button of buttons) {
-        section.addWidget(button);
+    for (const mail of mails) {
+        section.addWidget(mail);
     }
 
     section.addWidget(addButton);
