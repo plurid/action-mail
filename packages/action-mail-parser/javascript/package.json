@@ -17,7 +17,7 @@
         "email": "source@plurid.com",
         "url": "https://github.com/plurid/action-mail/issues"
     },
-    "homepage": "https://github.com/plurid/action-mail/blob/master/packages/action-mail-parser/README.md",
+    "homepage": "https://github.com/plurid/action-mail/blob/master/packages/action-mail-parser/javascript/README.md",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/",
         "access": "public"
