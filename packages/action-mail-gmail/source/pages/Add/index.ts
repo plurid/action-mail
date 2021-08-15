@@ -1,11 +1,11 @@
 // #region imports
     import {
-        CACHE_ADD_CONFIG,
+        PROPERTIES_ADD_CONFIG,
 
-        cacheSet,
-        cacheGet,
-        cacheUpdateAllConfigs,
-    } from '../../services/cache';
+        propertiesSet,
+        propertiesGet,
+        propertiesUpdateAllConfigs,
+    } from '../../services/properties';
 
     import {
         handleHomePage,
@@ -54,22 +54,22 @@ export function onChangeAddPage(
         }
     }
 
-    cacheSet(
-        CACHE_ADD_CONFIG,
+    propertiesSet(
+        PROPERTIES_ADD_CONFIG,
         data,
     );
 };
 
 
 export function submitAddPage() {
-    const newConfigData = cacheGet(CACHE_ADD_CONFIG);
+    const newConfigData = propertiesGet(PROPERTIES_ADD_CONFIG);
     const configName = `config-${newConfigData.toMail}`;
 
-    cacheSet(
+    propertiesSet(
         configName,
         newConfigData,
     );
-    cacheUpdateAllConfigs(configName);
+    propertiesUpdateAllConfigs(configName);
 
     return handleHomePage();
 }

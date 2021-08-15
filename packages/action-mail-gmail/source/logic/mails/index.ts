@@ -8,8 +8,8 @@
     } from '../../data/constants';
 
     import {
-        cacheGet,
-    } from '../../services/cache';
+        propertiesGet,
+    } from '../../services/properties';
 
     import {
         uuid,
@@ -66,7 +66,7 @@ export function handleMessage(
         return;
     }
 
-    const config = cacheGet(`config-${to}`);
+    const config = propertiesGet(`config-${to}`);
     if (!config) {
         return;
     }

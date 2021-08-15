@@ -1,9 +1,10 @@
 // #region imports
     import {
-        cacheGet,
-        cacheReset,
-    } from '../../services/cache';
+        propertiesGet,
+        propertiesReset,
+    } from '../../services/properties';
 // #endregion imports
+
 
 
 // #region module
@@ -21,7 +22,7 @@ export function viewConfig (
 }
 
 export function reset() {
-    cacheReset();
+    propertiesReset();
 }
 
 
@@ -30,13 +31,13 @@ export const buildHomeCard = () => {
     const banner = CardService.newImage()
         .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
 
-    let allConfigs = cacheGet(`all-configs`);
+    let allConfigs = propertiesGet(`all-configs`);
 
     const buttons: GoogleAppsScript.Card_Service.TextButton[] = [];
 
     if (allConfigs) {
         for (const config of allConfigs) {
-            const configData = cacheGet(config);
+            const configData = propertiesGet(config);
             if (!configData) {
                 continue;
             }
