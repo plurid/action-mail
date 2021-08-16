@@ -91,8 +91,10 @@ const MailDataCard = (
         .addItem('no', 'false', false);
 
 
-    const addAction = CardService.newAction().setFunctionName('submitAddPage');
-    const addButton = CardService.newImageButton()
+    const addAction = CardService.newAction()
+        .setFunctionName('submitAddPage');
+    const addButton = CardService.newDecoratedText()
+        .setText(configID ? 'Update' : 'Add')
         .setIconUrl(ADD_ICON_URL)
         .setOnClickAction(addAction);
 
@@ -103,7 +105,8 @@ const MailDataCard = (
         .setParameters({
             id: configID,
         });
-    const deleteMailButton = CardService.newImageButton()
+    const deleteMailButton = CardService.newDecoratedText()
+        .setText('Delete')
         .setIconUrl(DELETE_ICON_URL)
         .setOnClickAction(deleteMailAction);
 
