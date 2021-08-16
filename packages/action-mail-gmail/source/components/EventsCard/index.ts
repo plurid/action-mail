@@ -2,6 +2,8 @@
     // #region external
     import {
         BANNER_ICON_URL,
+        REFRESH_ICON_URL,
+        OBLITERATE_ICON_URL,
     } from '~data/constants';
 
     import {
@@ -26,11 +28,13 @@ const getEvents = (
 
     for (const eventData of eventsData) {
         const {
+            id,
             success,
             data,
             parsedAt,
             sender,
         } = eventData;
+
 
         const successText = success
             ? '[sent]'
@@ -39,12 +43,37 @@ const getEvents = (
         const text = CardService.newTextParagraph()
             .setText(`${successText} from ${sender} on ${new Date(parsedAt).toLocaleString()}`);
 
+
         const dataText = CardService.newTextParagraph()
             .setText(JSON.stringify(data, null, 2));
 
+
+        const resendAction = CardService.newAction()
+            .setFunctionName('resendEvent')
+            .setParameters({
+                id,
+            });
+        const resendButton = CardService.newDecoratedText()
+            .setText('Resend Event')
+            .setIconUrl(REFRESH_ICON_URL)
+            .setOnClickAction(resendAction);
+
+
+        const forgetAction = CardService.newAction()
+            .setFunctionName('forgetEvent')
+            .setParameters({
+                id,
+            });
+        const forgetButton = CardService.newDecoratedText()
+            .setText('Forget Event')
+            .setIconUrl(OBLITERATE_ICON_URL)
+            .setOnClickAction(forgetAction);
+
         const section = CardService.newCardSection()
             .addWidget(text)
-            .addWidget(dataText);
+            .addWidget(dataText)
+            .addWidget(resendButton)
+            .addWidget(forgetButton);
 
         events.push(section);
     }
