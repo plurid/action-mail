@@ -118,6 +118,31 @@ export const propertiesAddEvent = (
 }
 
 
+export const propertiesRemoveEvent = (
+    id: string,
+    mail: string,
+) => {
+    const mailEventsKey = `events-${mail}`;
+    const mailEvents = propertiesGet(mailEventsKey);
+
+    const eventID = `event-${mail}-${id}`;
+
+    if (!mailEvents) {
+        propertiesSet(mailEventsKey, []);
+    } else {
+        const filteredMailEvents = mailEvents.filter(
+            (mailEvent: any) => mailEvent !== eventID,
+        );
+
+        propertiesSet(mailEventsKey, [
+            ...filteredMailEvents,
+        ]);
+    }
+
+    propertiesDelete(eventID);
+}
+
+
 export const propertiesGetEvents = (
     mail: string,
 ) => {

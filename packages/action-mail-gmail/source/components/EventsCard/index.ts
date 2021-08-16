@@ -63,6 +63,7 @@ const getEvents = (
             .setFunctionName('forgetEvent')
             .setParameters({
                 id,
+                mail: toMail,
             });
         const forgetButton = CardService.newDecoratedText()
             .setText('Forget Event')

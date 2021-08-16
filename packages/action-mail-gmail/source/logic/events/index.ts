@@ -1,7 +1,7 @@
 // #region imports
     // #region external
     import {
-        propertiesDelete,
+        propertiesRemoveEvent,
     } from '~services/properties';
     // #endregion external
 // #endregion imports
@@ -19,7 +19,14 @@ export function resendEvent(
 export function forgetEvent(
     data: any,
 ) {
-    const id = data.parameters.id;
-    propertiesDelete(id);
+    const {
+        id,
+        mail,
+    } = data.parameters;
+
+    propertiesRemoveEvent(
+        id,
+        mail,
+    );
 }
 // #endregion module
