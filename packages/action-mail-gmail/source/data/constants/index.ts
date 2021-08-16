@@ -8,7 +8,7 @@ export const BANNER_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-
 
 export const ADD_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/add.png';
 export const EVENTS_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/info.png';
-export const REFRESH_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/refresh.png';
+export const RESET_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/reset.png';
 export const DELETE_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/delete.png';
 export const OBLITERATE_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/obliterate.png';
 

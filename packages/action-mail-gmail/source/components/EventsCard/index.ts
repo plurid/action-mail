@@ -2,7 +2,7 @@
     // #region external
     import {
         BANNER_ICON_URL,
-        REFRESH_ICON_URL,
+        RESET_ICON_URL,
         OBLITERATE_ICON_URL,
     } from '~data/constants';
 
@@ -55,7 +55,7 @@ const getEvents = (
             });
         const resendButton = CardService.newDecoratedText()
             .setText('Resend Event')
-            .setIconUrl(REFRESH_ICON_URL)
+            .setIconUrl(RESET_ICON_URL)
             .setOnClickAction(resendAction);
 
 
