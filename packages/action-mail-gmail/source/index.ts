@@ -1,6 +1,7 @@
 // #region imports
 export * from './data/constants';
 
+export * from './logic/general';
 export * from './logic/mails';
 export * from './logic/setup';
 

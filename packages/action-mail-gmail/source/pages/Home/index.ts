@@ -11,12 +11,7 @@
 
     import {
         propertiesGet,
-        propertiesReset,
-        propertiesDelete,
     } from '~services/properties';
-
-    import MailDataCard from '~components/MailDataCard';
-    import EventsCard from '~components/EventsCard';
     // #endregion external
 // #endregion imports
 
@@ -27,45 +22,6 @@ export function handleHomePage() {
     const card = buildHomeCard();
 
     return [card];
-}
-
-
-export function viewConfig (
-    data: any,
-) {
-    const id = data.parameters.id;
-
-    const configData = propertiesGet(id);
-    if (!configData) {
-        return;
-    }
-
-    const card = MailDataCard(configData);
-    return [card];
-}
-
-
-export function viewEvents(
-    data: any,
-) {
-    const id = data.parameters.id;
-
-    const eventsCard = EventsCard(id);
-
-    return [eventsCard];
-}
-
-
-export function deleteMail(
-    data: any,
-) {
-    const id = data.parameters.id;
-    propertiesDelete(id);
-}
-
-
-export function reset() {
-    propertiesReset();
 }
 
 
@@ -126,14 +82,16 @@ export const buildHomeCard = () => {
     const mails = getMails();
 
 
-    const addAction = CardService.newAction().setFunctionName('handleAddPage')
+    const addAction = CardService.newAction()
+        .setFunctionName('handleAddPage');
     const addButton = CardService.newDecoratedText()
         .setText('Add Mail')
         .setIconUrl(ADD_ICON_URL)
         .setOnClickAction(addAction);
 
 
-    const resetAction = CardService.newAction().setFunctionName('reset')
+    const resetAction = CardService.newAction()
+        .setFunctionName('reset');
     const resetButton = CardService.newDecoratedText()
         .setText('Clear All')
         .setIconUrl(OBLITERATE_ICON_URL)
