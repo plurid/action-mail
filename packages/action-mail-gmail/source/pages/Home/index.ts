@@ -4,7 +4,6 @@
         BANNER_ICON_URL,
         ADD_ICON_URL,
         EVENTS_ICON_URL,
-        DELETE_ICON_URL,
         OBLITERATE_ICON_URL,
 
         PROPERTIES_ALL_CONFIGS,
@@ -82,17 +81,6 @@ export const getMails = () => {
                 continue;
             }
 
-            const mailAction = CardService
-                .newAction()
-                .setFunctionName('viewConfig')
-                .setParameters({
-                    id: config,
-                });
-            const mailButton = CardService
-                .newTextButton()
-                .setText(`${configData.toMail}`)
-                .setOnClickAction(mailAction);
-
 
             const eventsAction = CardService
                 .newAction()
@@ -100,26 +88,27 @@ export const getMails = () => {
                 .setParameters({
                     id: config,
                 });
-            const eventsButton = CardService.newImageButton()
-                .setIconUrl(EVENTS_ICON_URL)
-                .setOnClickAction(eventsAction);
 
 
-            const deleteMailAction = CardService
+            const configAction = CardService
                 .newAction()
-                .setFunctionName('deleteMail')
+                .setFunctionName('viewConfig')
                 .setParameters({
                     id: config,
                 });
-            const deleteMailButton = CardService.newImageButton()
-                .setIconUrl(DELETE_ICON_URL)
-                .setOnClickAction(deleteMailAction);
+            const configButton = CardService.newImageButton()
+                .setIconUrl(EVENTS_ICON_URL)
+                .setOnClickAction(configAction);
+
+
+            const decoratedTextButton = CardService.newDecoratedText()
+                .setText(configData.toMail)
+                .setButton(configButton)
+                .setOnClickAction(eventsAction);
 
 
             const section = CardService.newCardSection()
-                .addWidget(mailButton)
-                .addWidget(eventsButton)
-                .addWidget(deleteMailButton);
+                .addWidget(decoratedTextButton);
 
             mails.push(section);
         }

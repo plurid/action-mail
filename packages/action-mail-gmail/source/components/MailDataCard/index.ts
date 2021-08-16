@@ -2,6 +2,7 @@
     // #region external
     import {
         BANNER_ICON_URL,
+        DELETE_ICON_URL,
 
         ADD_ICON_URL,
     } from '~data/constants';
@@ -15,6 +16,7 @@ const MailDataCard = (
     data?: any,
 ) => {
     const toMailValue = data?.toMail || '';
+    const configID = toMailValue ? `config-${toMailValue}` : '';
     const endpointValue = data?.endpoint || '';
     const tokenValue = data?.token || '';
     const spacerValue = data?.spacer || '';
@@ -92,6 +94,18 @@ const MailDataCard = (
         .setOnClickAction(addAction);
 
 
+    const deleteMailAction = CardService
+        .newAction()
+        .setFunctionName('deleteMail')
+        .setParameters({
+            id: configID,
+        });
+    const deleteMailButton = CardService.newImageButton()
+        .setIconUrl(DELETE_ICON_URL)
+        .setOnClickAction(deleteMailAction);
+
+
+
     const section = CardService.newCardSection()
         .addWidget(banner)
         .addWidget(toMail)
@@ -103,6 +117,10 @@ const MailDataCard = (
         .addWidget(spacer)
         .addWidget(camelCaseKeys)
         .addWidget(addButton);
+
+    if (configID) {
+        section.addWidget(deleteMailButton);
+    }
 
 
     return CardService.newCardBuilder()
