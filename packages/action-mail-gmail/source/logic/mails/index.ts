@@ -131,69 +131,40 @@ export function handleMessage(
         },
     };
 
-    switch (endpointType) {
-        case 'graphql':
-            notifyActionMailGraphql(
-                metadata,
-                data,
-                endpoint,
-                token,
-                tokenType,
-            );
-            break;
-        case 'rest':
-            notifyActionMailRest(
-                metadata,
-                data,
-                endpoint,
-                token,
-                tokenType,
-            );
-    }
 
-    message.markRead();
-}
-
-
-export function notifyActionMailGraphql(
-    metadata: any,
-    data: any,
-    endpoint: string,
-    token: string,
-    tokenType: 'payload' | 'bearer',
-) {
-
-}
-
-
-export function notifyActionMailRest(
-    metadata: any,
-    data: any,
-    endpoint: string,
-    token: string,
-    tokenType: 'payload' | 'bearer',
-) {
     const actionMail = {
         metadata,
         data,
     };
-
     if (tokenType === 'payload') {
         actionMail['token'] = token;
     }
 
 
     let headers = {};
-
     if (tokenType === 'bearer') {
         headers['Authorization'] = `Bearer ${token}`;
+    }
+
+
+    let payload;
+    switch (endpointType) {
+        case 'graphql':
+            payload = notifyActionMailGraphql(
+                actionMail,
+            );
+            break;
+        case 'rest':
+            payload = notifyActionMailRest(
+                actionMail,
+            );
     }
 
 
     const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
         'method': 'post',
         'contentType': 'application/json',
-        'payload': JSON.stringify(actionMail),
+        'payload': JSON.stringify(payload),
         headers,
     };
 
@@ -201,10 +172,10 @@ export function notifyActionMailRest(
     const responseCode = post.getResponseCode();
 
     let success = true;
-
     if (responseCode !== 200) {
         success = false;
     }
+
 
     const sentMail = {
         success,
@@ -214,7 +185,38 @@ export function notifyActionMailRest(
         sender: metadata.message.sender,
         receiver: metadata.message.receiver,
     };
-
     propertiesAddEvent(sentMail);
+
+
+    message.markRead();
+}
+
+
+export function notifyActionMailGraphql(
+    actionMail: any,
+) {
+    const payload = {
+        query: `
+            mutation ActionMailCall($input: ActionMailCallInput!) {
+                actionMailCall(input: $input) {
+                    status
+                }
+            }
+        `,
+        variables: {
+            input: {
+                ...actionMail,
+            },
+        },
+    };
+
+    return payload;
+}
+
+
+export function notifyActionMailRest(
+    actionMail: any,
+) {
+    return actionMail;
 }
 // #endregion module
