@@ -25,9 +25,12 @@ const MailDataCard = (
         .setImageUrl(BANNER_ICON_URL);
 
 
-    const onChangeAction = CardService.newAction().setFunctionName('onChangeAddPage');
+    const header = CardService.newTextParagraph()
+        .setText(`<b>${configID ? 'Edit' : 'Add'} Mail</b>`);
 
 
+    const onChangeAction = CardService.newAction()
+        .setFunctionName('onChangeAddPage');
     const toMail = CardService.newTextInput()
         .setFieldName('toMail')
         .setOnChangeAction(onChangeAction)
@@ -108,6 +111,7 @@ const MailDataCard = (
 
     const section = CardService.newCardSection()
         .addWidget(banner)
+        .addWidget(header)
         .addWidget(toMail)
         .addWidget(endpoint)
         .addWidget(endpointType)
