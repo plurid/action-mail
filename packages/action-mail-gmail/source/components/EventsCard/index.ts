@@ -16,7 +16,7 @@
 
 
 // #region module
-const getEvents = (
+export const getEvents = (
     toMail: string,
 ) => {
     const events: GoogleAppsScript.Card_Service.CardSection[] = [];
@@ -83,31 +83,47 @@ const getEvents = (
 }
 
 
+export const NoEventsCard = () => {
+    const banner = CardService.newImage()
+        .setImageUrl(BANNER_ICON_URL);
+
+    const header = CardService.newTextParagraph()
+            .setText(`<b>No Events</b>`);
+
+    const section = CardService.newCardSection()
+        .addWidget(banner)
+        .addWidget(header)
+
+    return CardService.newCardBuilder()
+        .addSection(section)
+        .build();
+}
+
+
 const EventsCard = (
     id: string,
 ) => {
-    const banner = CardService.newImage()
-        .setImageUrl(BANNER_ICON_URL);
+    const noEventsCard = NoEventsCard();
 
 
     const configData = propertiesGet(id);
     if (!configData) {
-        const header = CardService.newTextParagraph()
-            .setText(`<b>No Events</b>`);
-
-        const section = CardService.newCardSection()
-            .addWidget(banner)
-            .addWidget(header)
-
-        return CardService.newCardBuilder()
-            .addSection(section)
-            .build();
+        return noEventsCard;
     }
 
 
     const {
         toMail,
     } = configData;
+
+    const events = getEvents(toMail);
+    if (events.length === 0) {
+        return noEventsCard;
+    }
+
+
+    const banner = CardService.newImage()
+        .setImageUrl(BANNER_ICON_URL);
 
 
     const header = CardService.newTextParagraph()
@@ -123,7 +139,6 @@ const EventsCard = (
         .addSection(section);
 
 
-    const events = getEvents(toMail);
     for (const event of events) {
         card.addSection(event);
     }
