@@ -127,13 +127,15 @@ export const buildHomeCard = () => {
 
 
     const addAction = CardService.newAction().setFunctionName('handleAddPage')
-    const addButton = CardService.newImageButton()
+    const addButton = CardService.newDecoratedText()
+        .setText('Add Mail')
         .setIconUrl(ADD_ICON_URL)
         .setOnClickAction(addAction);
 
 
     const resetAction = CardService.newAction().setFunctionName('reset')
-    const resetButton = CardService.newImageButton()
+    const resetButton = CardService.newDecoratedText()
+        .setText('Clear All')
         .setIconUrl(OBLITERATE_ICON_URL)
         .setOnClickAction(resetAction);
 
