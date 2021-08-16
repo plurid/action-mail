@@ -87,4 +87,54 @@ export const propertiesUpdateAllConfigs = (
         PROPERTIES_ADD_CONFIG,
     );
 }
+
+
+export const propertiesAddEvent = (
+    event: any,
+) => {
+    const {
+        id,
+        receiver,
+    } = event;
+
+    const receiverEventsKey = `events-${receiver}`;
+    const receiverEvents = propertiesGet(receiverEventsKey);
+
+    const eventID = `event-${receiver}-${id}`;
+
+
+    if (!receiverEvents) {
+        propertiesSet(receiverEventsKey, [
+            eventID,
+        ]);
+    } else {
+        propertiesSet(receiverEventsKey, [
+            ...receiverEvents,
+            eventID,
+        ]);
+    }
+
+    propertiesSet(eventID, event);
+}
+
+
+export const propertiesGetEvents = (
+    mail: string,
+) => {
+    const events: any[] = [];
+
+    const eventsKey = `events-${mail}`;
+    const eventIDs = propertiesGet(eventsKey);
+
+    if (!eventIDs) {
+        return events;
+    }
+
+    for (const eventID of eventIDs) {
+        const event = propertiesGet(eventID);
+        events.push(event);
+    }
+
+    return events;
+}
 // #endregion module

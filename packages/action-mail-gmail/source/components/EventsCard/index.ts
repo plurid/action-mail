@@ -6,6 +6,7 @@
 
     import {
         propertiesGet,
+        propertiesGetEvents,
     } from '~services/properties';
     // #endregion external
 // #endregion imports
@@ -16,7 +17,37 @@
 const getEvents = (
     toMail: string,
 ) => {
-    const events: any[] = [];
+    const events: GoogleAppsScript.Card_Service.CardSection[] = [];
+
+    const eventsData = propertiesGetEvents(toMail);
+    if (eventsData.length === 0) {
+        return [];
+    }
+
+    for (const eventData of eventsData) {
+        const {
+            success,
+            data,
+            parsedAt,
+            sender,
+        } = eventData;
+
+        const successText = success
+            ? '[sent]'
+            : '[error';
+
+        const text = CardService.newTextParagraph()
+            .setText(`${successText} from ${sender} on ${new Date(parsedAt).toLocaleString()}`);
+
+        const dataText = CardService.newTextParagraph()
+            .setText(JSON.stringify(data, null, 2));
+
+        const section = CardService.newCardSection()
+            .addWidget(text)
+            .addWidget(dataText);
+
+        events.push(section);
+    }
 
     return events;
 }
@@ -58,14 +89,17 @@ const EventsCard = (
         .addWidget(header);
 
 
+    const card = CardService.newCardBuilder()
+        .addSection(section);
+
+
     const events = getEvents(toMail);
     for (const event of events) {
-        section.addWidget(event);
+        card.addSection(event);
     }
 
 
-    return CardService.newCardBuilder()
-        .addSection(section)
+    return card
         .build();
 }
 // #endregion module

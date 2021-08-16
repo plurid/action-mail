@@ -9,6 +9,7 @@
 
     import {
         propertiesGet,
+        propertiesAddEvent,
     } from '../../services/properties';
 
     import {
@@ -122,6 +123,7 @@ export function handleMessage(
         message: {
             id: messageID,
             sender,
+            receiver: to,
             subject,
             body,
             date,
@@ -198,8 +200,21 @@ export function notifyActionMailRest(
     const post = UrlFetchApp.fetch(endpoint, options);
     const responseCode = post.getResponseCode();
 
-    if (responseCode !== 200) {
+    let success = true;
 
+    if (responseCode !== 200) {
+        success = false;
     }
+
+    const sentMail = {
+        success,
+        data,
+        id: metadata.id,
+        parsedAt: metadata.parsedAt,
+        sender: metadata.message.sender,
+        receiver: metadata.message.receiver,
+    };
+
+    propertiesAddEvent(sentMail);
 }
 // #endregion module
