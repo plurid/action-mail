@@ -32,6 +32,7 @@ export const addPageFields = [
     'endpointType',
     'token',
     'tokenType',
+    'publicKey',
     'useAttachments',
     'parseSubject',
     'spacer',

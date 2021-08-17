@@ -5,3 +5,4 @@ declare function parser(
 
 
 declare var cCryptoGS: any;
+declare var JSEncrypt: any;

@@ -80,6 +80,7 @@ const MailDataCard = (
         .setFieldName('publicKey')
         .setOnChangeAction(onChangeAction)
         .setTitle('public key')
+        .setMultiline(true)
         .setValue(publicKeyValue);
 
 

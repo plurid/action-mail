@@ -96,14 +96,42 @@ export const getFielders = (
 }
 
 
+export const generateAESKey = (
+) => {
+    return uuid() + uuid() + uuid() + uuid();
+}
+
+
+/**
+ * Generates and AES key and encrypts the value as text with the AES key (arbitrary length encryption).
+ *
+ * Encrypts the AES key with the user's public key.
+ *
+ * The user will decrypt the `aes` key using their private key,
+ * then will decrypt the `text` wih the key obtained.
+ *
+ * @param value
+ * @param publicKey
+ * @returns
+ */
 export const encrypt = (
     value: any,
     publicKey: string,
 ) => {
-    const cipher = new cCryptoGS.Cipher(publicKey, 'aes');
-    const encryptedMessage = cipher.encrypt(JSON.stringify(value));
+    const text = JSON.stringify(value);
 
-    return encryptedMessage;
+    const aesKey = generateAESKey();
+    const cipher = new cCryptoGS.Cipher(aesKey, 'aes');
+    const encryptedText = cipher.encrypt(text);
+
+    const jsEncrypt = new JSEncrypt()
+    jsEncrypt.setPublicKey(publicKey);
+    const encryptedAES = jsEncrypt.encrypt(aesKey);
+
+    return {
+        text: encryptedText,
+        aes: encryptedAES,
+    };
 }
 
 
