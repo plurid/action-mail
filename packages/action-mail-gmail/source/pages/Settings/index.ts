@@ -1,3 +1,13 @@
+// #region imports
+    // #region external
+    import {
+        BANNER_ICON_URL,
+    } from '~data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
 // #region module
 export function handleSettingsPage() {
     const card = buildSettingsCard();
@@ -8,13 +18,21 @@ export function handleSettingsPage() {
 
 export const buildSettingsCard = () => {
     const banner = CardService.newImage()
-        .setImageUrl('https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png');
+        .setImageUrl(BANNER_ICON_URL);
+
+    const header = CardService.newTextParagraph()
+        .setText(`<b>Settings</b>`);
+
 
     const section = CardService.newCardSection()
-        .addWidget(banner);
+        .addWidget(banner)
+        .addWidget(header);
 
-    return CardService.newCardBuilder()
-        .addSection(section)
-        .build();
+
+    const card = CardService.newCardBuilder()
+        .addSection(section);
+
+
+    return card.build();
 }
 // #endregion module
