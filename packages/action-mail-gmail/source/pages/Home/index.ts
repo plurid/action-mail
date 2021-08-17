@@ -5,6 +5,7 @@
         ADD_ICON_URL,
         EVENTS_ICON_URL,
         OBLITERATE_ICON_URL,
+        EDIT_ICON_URL,
 
         PROPERTIES_ALL_CONFIGS,
     } from '~data/constants';
@@ -81,6 +82,11 @@ export const getMails = () => {
 }
 
 
+export const autofillDrafts = () => {
+
+}
+
+
 export const buildHomeCard = () => {
     const banner = CardService.newImage()
         .setImageUrl(BANNER_ICON_URL);
@@ -121,6 +127,21 @@ export const buildHomeCard = () => {
     }
 
     card.addSection(bottomSection);
+
+
+    const autofillAction = CardService.newAction()
+        .setFunctionName('autofillDrafts');
+    const autofillButton = CardService.newDecoratedText()
+        .setText('Autofill Drafts')
+        .setIconUrl(EDIT_ICON_URL)
+        .setOnClickAction(autofillAction);
+
+    const actionsSections = CardService.newCardSection()
+        .addWidget(autofillButton);
+
+
+    card.addSection(actionsSections);
+
 
     return card.build();
 }

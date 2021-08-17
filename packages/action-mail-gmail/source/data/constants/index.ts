@@ -3,14 +3,18 @@
 export const PAGE_SIZE = 150;
 
 
+export const BASE_ASSETS_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/';
 
-export const BANNER_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-banner.png';
+export const BANNER_ICON_URL = BASE_ASSETS_URL + 'identity/action-mail-banner.png';
 
-export const ADD_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/add.png';
-export const EVENTS_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/info.png';
-export const RESET_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/reset.png';
-export const DELETE_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/delete.png';
-export const OBLITERATE_ICON_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/assets/obliterate.png';
+export const BASE_ASSETS_IMAGES_URL = BASE_ASSETS_URL + 'clients/assets/';
+
+export const ADD_ICON_URL = BASE_ASSETS_IMAGES_URL + 'add.png';
+export const EVENTS_ICON_URL = BASE_ASSETS_IMAGES_URL + 'info.png';
+export const RESET_ICON_URL = BASE_ASSETS_IMAGES_URL + 'reset.png';
+export const DELETE_ICON_URL = BASE_ASSETS_IMAGES_URL + 'delete.png';
+export const OBLITERATE_ICON_URL = BASE_ASSETS_IMAGES_URL + 'obliterate.png';
+export const EDIT_ICON_URL = BASE_ASSETS_IMAGES_URL + 'edit.png';
 
 
 export const CACHE_ALL_CONFIGS = 'all-configs';
