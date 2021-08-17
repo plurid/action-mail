@@ -26,7 +26,14 @@ export const getEvents = (
         return [];
     }
 
-    for (const eventData of eventsData) {
+    const sortedEventsData = eventsData.sort((a, b) => {
+        if (a.parsedAt > b.parsedAt) return -1;
+        if (b.parsedAt > a.parsedAt) return 1;
+
+        return 0;
+    });
+
+    for (const eventData of sortedEventsData) {
         const {
             id,
             success,
@@ -40,12 +47,21 @@ export const getEvents = (
             ? '[sent]'
             : '[error';
 
+        const cleanSender = sender
+            .replace('<', '&lt;')
+            .replace('>', '&gt;');
+
+        const dateValue = new Date(parsedAt).toLocaleString();
+
         const text = CardService.newTextParagraph()
-            .setText(`${successText} from ${sender} on ${new Date(parsedAt).toLocaleString()}`);
+            .setText(`${successText} from ${cleanSender} on ${dateValue}`);
 
 
+        const dataValue = Object.keys(data).length === 0
+            ? 'no actions'
+            : JSON.stringify(data, null, 2);
         const dataText = CardService.newTextParagraph()
-            .setText(JSON.stringify(data, null, 2));
+            .setText(dataValue);
 
 
         const resendAction = CardService.newAction()
