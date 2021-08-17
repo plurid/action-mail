@@ -17,6 +17,15 @@
 
 
 // #region module
+export const refreshEventCard = (
+    mail: string,
+) => {
+    const eventsCard = EventsCard(`config-${mail}`);
+
+    return CardService.newNavigation().updateCard(eventsCard);
+}
+
+
 export function resendEvent(
     call: any,
 ) {
@@ -55,24 +64,24 @@ export function resendEvent(
         token,
         tokenType,
     );
+
+    return refreshEventCard(mail);
 }
 
 
 export function forgetEvent(
-    data: any,
+    call: any,
 ) {
     const {
         id,
         mail,
-    } = data.parameters;
+    } = call.parameters;
 
     propertiesRemoveEvent(
         id,
         mail,
     );
 
-    const eventsCard = EventsCard(`config-${mail}`);
-
-    return CardService.newNavigation().updateCard(eventsCard);
+    return refreshEventCard(mail);
 }
 // #endregion module
