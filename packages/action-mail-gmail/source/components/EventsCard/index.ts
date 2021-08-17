@@ -4,6 +4,10 @@
         BANNER_ICON_URL,
         RESET_ICON_URL,
         OBLITERATE_ICON_URL,
+
+        PROPERTIES_SETTINGS,
+
+        DEFAULT_TIME_LOCALE,
     } from '~data/constants';
 
     import {
@@ -19,6 +23,8 @@
 export const getEvents = (
     toMail: string,
 ) => {
+    const settings = propertiesGet(PROPERTIES_SETTINGS);
+
     const events: GoogleAppsScript.Card_Service.CardSection[] = [];
 
     const eventsData = propertiesGetEvents(toMail);
@@ -51,7 +57,7 @@ export const getEvents = (
             .replace('<', '&lt;')
             .replace('>', '&gt;');
 
-        const dateValue = new Date(sentAt).toLocaleString();
+        const dateValue = new Date(sentAt).toLocaleString(settings?.timeLocale || DEFAULT_TIME_LOCALE);
 
         const text = CardService.newTextParagraph()
             .setText(`${successText} from ${cleanSender} on ${dateValue}`);

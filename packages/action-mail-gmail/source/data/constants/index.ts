@@ -19,4 +19,10 @@ export const CACHE_ADD_CONFIG = 'add-new-config';
 
 export const PROPERTIES_ALL_CONFIGS = 'all-configs';
 export const PROPERTIES_ADD_CONFIG = 'add-new-config';
+
+export const PROPERTIES_SETTINGS = 'settings';
+
+
+
+export const DEFAULT_TIME_LOCALE = 'en';
 // #endregion module
