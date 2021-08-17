@@ -59,6 +59,72 @@ export const getMailFromAddress = (
 }
 
 
+export const sendMessage = (
+    metadata: any,
+    data: any,
+    endpoint: any,
+    endpointType: any,
+    token: any,
+    tokenType: any,
+) => {
+    const actionMail = {
+        metadata,
+        data,
+    };
+    if (tokenType === 'payload') {
+        actionMail['token'] = token;
+    }
+
+
+    let headers = {};
+    if (tokenType === 'bearer') {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+
+    let payload;
+    switch (endpointType) {
+        case 'graphql':
+            payload = notifyActionMailGraphql(
+                actionMail,
+            );
+            break;
+        case 'rest':
+            payload = notifyActionMailRest(
+                actionMail,
+            );
+    }
+
+
+    const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+        'method': 'post',
+        'contentType': 'application/json',
+        'payload': JSON.stringify(payload),
+        headers,
+    };
+
+    const post = UrlFetchApp.fetch(endpoint, options);
+    const responseCode = post.getResponseCode();
+
+    let success = true;
+    if (responseCode !== 200) {
+        success = false;
+    }
+
+
+    const sentMail = {
+        success,
+        data,
+        metadata,
+        id: metadata.id,
+        parsedAt: metadata.parsedAt,
+        sender: metadata.message.sender,
+        receiver: metadata.message.receiver,
+    };
+    propertiesAddEvent(sentMail);
+}
+
+
 export function handleMessage(
     message: GoogleAppsScript.Gmail.GmailMessage,
 ) {
@@ -132,60 +198,14 @@ export function handleMessage(
     };
 
 
-    const actionMail = {
+    sendMessage(
         metadata,
         data,
-    };
-    if (tokenType === 'payload') {
-        actionMail['token'] = token;
-    }
-
-
-    let headers = {};
-    if (tokenType === 'bearer') {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-
-    let payload;
-    switch (endpointType) {
-        case 'graphql':
-            payload = notifyActionMailGraphql(
-                actionMail,
-            );
-            break;
-        case 'rest':
-            payload = notifyActionMailRest(
-                actionMail,
-            );
-    }
-
-
-    const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
-        'method': 'post',
-        'contentType': 'application/json',
-        'payload': JSON.stringify(payload),
-        headers,
-    };
-
-    const post = UrlFetchApp.fetch(endpoint, options);
-    const responseCode = post.getResponseCode();
-
-    let success = true;
-    if (responseCode !== 200) {
-        success = false;
-    }
-
-
-    const sentMail = {
-        success,
-        data,
-        id: metadata.id,
-        parsedAt: metadata.parsedAt,
-        sender: metadata.message.sender,
-        receiver: metadata.message.receiver,
-    };
-    propertiesAddEvent(sentMail);
+        endpoint,
+        endpointType,
+        token,
+        tokenType,
+    );
 
 
     message.markRead();

@@ -68,6 +68,7 @@ export const getEvents = (
             .setFunctionName('resendEvent')
             .setParameters({
                 id,
+                mail: toMail,
             });
         const resendButton = CardService.newDecoratedText()
             .setText('Resend Event')

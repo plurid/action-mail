@@ -143,6 +143,16 @@ export const propertiesRemoveEvent = (
 }
 
 
+export const propertiesGetEvent = (
+    mail: string,
+    id: string,
+) => {
+    const eventID = `event-${mail}-${id}`;
+    const event = propertiesGet(eventID);
+    return event;
+}
+
+
 export const propertiesGetEvents = (
     mail: string,
 ) => {

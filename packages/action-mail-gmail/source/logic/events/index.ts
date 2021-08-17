@@ -2,7 +2,13 @@
     // #region external
     import {
         propertiesRemoveEvent,
+        propertiesGet,
+        propertiesGetEvent,
     } from '~services/properties';
+
+    import {
+        sendMessage,
+    } from '../mails';
     // #endregion external
 // #endregion imports
 
@@ -10,9 +16,43 @@
 
 // #region module
 export function resendEvent(
-    data: any,
+    call: any,
 ) {
-    const id = data.parameters.id;
+    const {
+        id,
+        mail,
+    } = call.parameters;
+
+    const config = propertiesGet(`config-${mail}`);
+    if (!config) {
+        return;
+    }
+
+    const event = propertiesGetEvent(mail, id);
+    if (!event) {
+        return;
+    }
+
+    const {
+        metadata,
+        data,
+    } = event;
+
+    const {
+        endpoint,
+        endpointType,
+        token,
+        tokenType,
+    } = config;
+
+    sendMessage(
+        metadata,
+        data,
+        endpoint,
+        endpointType,
+        token,
+        tokenType,
+    );
 }
 
 
