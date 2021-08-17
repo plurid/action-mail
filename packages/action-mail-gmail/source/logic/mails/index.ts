@@ -1,6 +1,8 @@
 // #region imports
     import {
         Attachment,
+        SentMailEvent,
+        Metadata,
     } from '../../data/interfaces';
 
     import {
@@ -62,10 +64,10 @@ export const getMailFromAddress = (
 export const sendMessage = (
     metadata: any,
     data: any,
-    endpoint: any,
-    endpointType: any,
-    token: any,
-    tokenType: any,
+    endpoint: string,
+    endpointType: string,
+    token: string,
+    tokenType: string,
 ) => {
     const actionMail = {
         metadata,
@@ -94,6 +96,9 @@ export const sendMessage = (
                 actionMail,
             );
     }
+    if (!payload) {
+        return;
+    }
 
 
     const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
@@ -112,7 +117,7 @@ export const sendMessage = (
     }
 
 
-    const sentMail = {
+    const sentMail: SentMailEvent = {
         success,
         data,
         metadata,
@@ -189,7 +194,7 @@ export function handleMessage(
         },
     );
 
-    const metadata = {
+    const metadata: Metadata = {
         id,
         parsedAt,
         message: {
