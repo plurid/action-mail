@@ -18,7 +18,7 @@
     "https://mail.google.com/"
   ],
   "urlFetchWhitelist": [
-    "https://plurid.com/"
+    "https://api.plurid.com/"
   ],
   "addOns": {
     "common": {
