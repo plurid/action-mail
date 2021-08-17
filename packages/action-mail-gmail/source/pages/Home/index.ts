@@ -84,40 +84,31 @@ export const getMails = () => {
 
 
 export const autofieldDraft = (
-    id: string,
-    autofields: any,
+    draft: GoogleAppsScript.Gmail.GmailDraft,
+    autofields: Record<string, any>,
 ) => {
-    const message = GmailApp.getMessageById(id);
-    if (!message) {
-        return;
-    }
+    const message = draft.getMessage();
 
-    const body = message.getBody();
-
+    let body = message.getBody();
     const data = parser(
         body,
     );
-
-    let raw = message.getRawContent();
 
     for (const key of Object.keys(data)) {
         if (autofields[key]) {
             const find = `${key}: `;
             const re = new RegExp(find, 'g');
-            raw = raw.replace(re, `${key}: ${autofields[key]}`);
+            body = body.replace(re, `${key}: ${autofields[key]}`);
         }
     }
 
-    Gmail.Users?.Drafts?.update(
-        {
-            id,
-            message: {
-                threadId: message.getThread().getId(),
-                raw: Utilities.base64EncodeWebSafe(raw),
-            },
-        },
-        'me',
-        id,
+    const recipient = message.getTo();
+    const subject = message.getSubject();
+
+    draft.update(
+        recipient,
+        subject,
+        body,
     );
 }
 
@@ -161,10 +152,10 @@ export const autofieldDrafts = () => {
 
     const autofields = getAutofields(autofieldsValue);
 
-    const drafts = GmailApp.getDraftMessages();
+    const drafts = GmailApp.getDrafts();
     for (let i = 0; i < drafts.length; i++) {
         autofieldDraft(
-            drafts[i].getId(),
+            drafts[i],
             autofields,
         );
     }
