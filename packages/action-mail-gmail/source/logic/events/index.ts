@@ -54,6 +54,7 @@ export function resendEvent(
         endpointType,
         token,
         tokenType,
+        publicKey,
     } = config;
 
     sendMessage(
@@ -63,6 +64,7 @@ export function resendEvent(
         endpointType,
         token,
         tokenType,
+        publicKey,
     );
 
     return refreshEventCard(mail);
