@@ -27,6 +27,7 @@ export function handleSettingsPage() {
 
 export const settingsPageFields = [
     'timeLocale',
+    'autofields',
 ];
 
 export function onChangeSettingsPage(
@@ -64,6 +65,7 @@ export const buildSettingsCard = () => {
     const settings = propertiesGet(PROPERTIES_SETTINGS);
 
     const timeLocaleValue = settings?.timeLocale || DEFAULT_TIME_LOCALE;
+    const autofieldsValue = settings?.autofields || '';
 
 
     const banner = CardService.newImage()
@@ -84,11 +86,20 @@ export const buildSettingsCard = () => {
         .setHint('ISO 639-1 codes')
         .setValue(timeLocaleValue);
 
+    const autofields = CardService.newTextInput()
+        .setFieldName('autofields')
+        .setOnChangeAction(onChangeAction)
+        .setTitle('autofields')
+        .setValue(autofieldsValue)
+        .setHint('one per line, e.g {key: value}')
+        .setMultiline(true);
+
 
     const section = CardService.newCardSection()
         .addWidget(banner)
         .addWidget(header)
-        .addWidget(timeLocale);
+        .addWidget(timeLocale)
+        .addWidget(autofields);
 
 
     const card = CardService.newCardBuilder()

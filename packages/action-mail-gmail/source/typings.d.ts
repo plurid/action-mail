@@ -1,4 +1,4 @@
 declare function parser(
     body: string,
-    options: any,
-): void;
+    options?: any,
+): any;

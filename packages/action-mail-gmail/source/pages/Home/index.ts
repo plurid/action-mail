@@ -8,6 +8,7 @@
         EDIT_ICON_URL,
 
         PROPERTIES_ALL_CONFIGS,
+        PROPERTIES_SETTINGS,
     } from '~data/constants';
 
     import {
@@ -82,8 +83,91 @@ export const getMails = () => {
 }
 
 
-export const autofillDrafts = () => {
+export const autofieldDraft = (
+    id: string,
+    autofields: any,
+) => {
+    const message = GmailApp.getMessageById(id);
+    if (!message) {
+        return;
+    }
 
+    const body = message.getBody();
+
+    const data = parser(
+        body,
+    );
+
+    let raw = message.getRawContent();
+
+    for (const key of Object.keys(data)) {
+        if (autofields[key]) {
+            const find = `${key}: `;
+            const re = new RegExp(find, 'g');
+            raw = raw.replace(re, `${key}: ${autofields[key]}`);
+        }
+    }
+
+    Gmail.Users?.Drafts?.update(
+        {
+            id,
+            message: {
+                threadId: message.getThread().getId(),
+                raw: Utilities.base64EncodeWebSafe(raw),
+            },
+        },
+        'me',
+        id,
+    );
+}
+
+
+export const getAutofields = (
+    autofieldsValue: string,
+) => {
+    const lines = autofieldsValue.split('\n');
+
+    let autofields: any = {};
+
+    for (const line of lines) {
+        let lineValue = line.trim();
+        const start = lineValue[0];
+        const end = lineValue[lineValue.length - 1];
+        const keyValue = parser(
+            line,
+            {
+                fielders: [
+                    [start, end],
+                ],
+            },
+        );
+
+        autofields = {
+            ...autofields,
+            ...keyValue,
+        };
+    }
+
+    return autofields;
+}
+
+
+export const autofieldDrafts = () => {
+    const settings = propertiesGet(PROPERTIES_SETTINGS);
+    const autofieldsValue = settings?.autofields || '';
+    if (!autofieldsValue) {
+        return;
+    }
+
+    const autofields = getAutofields(autofieldsValue);
+
+    const drafts = GmailApp.getDraftMessages();
+    for (let i = 0; i < drafts.length; i++) {
+        autofieldDraft(
+            drafts[i].getId(),
+            autofields,
+        );
+    }
 }
 
 
@@ -129,15 +213,15 @@ export const buildHomeCard = () => {
     card.addSection(bottomSection);
 
 
-    const autofillAction = CardService.newAction()
-        .setFunctionName('autofillDrafts');
-    const autofillButton = CardService.newDecoratedText()
-        .setText('Autofill Drafts')
+    const autofieldAction = CardService.newAction()
+        .setFunctionName('autofieldDrafts');
+    const autofieldButton = CardService.newDecoratedText()
+        .setText('Autofield Drafts')
         .setIconUrl(EDIT_ICON_URL)
-        .setOnClickAction(autofillAction);
+        .setOnClickAction(autofieldAction);
 
     const actionsSections = CardService.newCardSection()
-        .addWidget(autofillButton);
+        .addWidget(autofieldButton);
 
 
     card.addSection(actionsSections);
