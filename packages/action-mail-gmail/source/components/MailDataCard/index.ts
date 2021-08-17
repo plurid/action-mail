@@ -23,6 +23,7 @@ const MailDataCard = (
     const parseSubjectValue = data?.parseSubject ?? false;
     const spacerValue = data?.spacer || '';
     const camelCaseKeysValue = data?.camelCaseKeys ?? false;
+    const fieldersValue = data?.fielders ?? '{ }';
 
 
     const banner = CardService.newImage()
@@ -35,6 +36,8 @@ const MailDataCard = (
 
     const onChangeAction = CardService.newAction()
         .setFunctionName('onChangeAddPage');
+
+
     const toMail = CardService.newTextInput()
         .setFieldName('toMail')
         .setOnChangeAction(onChangeAction)
@@ -124,6 +127,15 @@ const MailDataCard = (
         );
 
 
+    const fielders = CardService.newTextInput()
+        .setFieldName('fielders')
+        .setOnChangeAction(onChangeAction)
+        .setTitle('fielders')
+        .setValue(fieldersValue)
+        .setHint('space separated, each line a fielder pair')
+        .setMultiline(true);
+
+
     const addAction = CardService.newAction()
         .setFunctionName('submitAddPage');
     const addButton = CardService.newDecoratedText()
@@ -157,6 +169,7 @@ const MailDataCard = (
         .addWidget(parseSubject)
         .addWidget(spacer)
         .addWidget(camelCaseKeys)
+        .addWidget(fielders)
         .addWidget(addButton);
 
     if (configID) {

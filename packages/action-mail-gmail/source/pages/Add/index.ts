@@ -36,6 +36,7 @@ export const addPageFields = [
     'parseSubject',
     'spacer',
     'camelCaseKeys',
+    'fielders',
 ];
 
 export const addPageFieldsBooleans = [

@@ -61,6 +61,40 @@ export const getMailFromAddress = (
 }
 
 
+export const getFielders = (
+    fielders?: string,
+) => {
+    const defaultFielders = [
+        ['{', '}']
+    ];
+
+    if (!fielders) {
+        return defaultFielders;
+    }
+
+
+    const fieldersValue: string[][] = [];
+
+    const lines = fielders.split('\n');
+
+    for (const line of lines) {
+        const items = line.split(' ');
+        const start = items[0];
+        const end = items[1];
+
+        fieldersValue.push([
+            start, end,
+        ]);
+    }
+
+    if (fieldersValue.length === 0) {
+        return defaultFielders;
+    }
+
+    return fieldersValue;
+}
+
+
 export const sendMessage = (
     metadata: any,
     data: any,
@@ -153,6 +187,7 @@ export function handleMessage(
         parseSubject,
         spacer,
         camelCaseKeys,
+        fielders,
     } = config;
 
 
@@ -191,6 +226,7 @@ export function handleMessage(
         {
             spacer,
             camelCaseKeys,
+            fielders: getFielders(fielders),
         },
     );
 
