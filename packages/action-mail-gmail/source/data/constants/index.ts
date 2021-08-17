@@ -29,4 +29,7 @@ export const PROPERTIES_SETTINGS = 'settings';
 
 
 export const DEFAULT_TIME_LOCALE = 'en';
+
+
+export const PLURID_API_ENDPOINT = 'https://api.plurid.com/graphql';
 // #endregion module

@@ -19,6 +19,7 @@ const MailDataCard = (
     const configID = toMailValue ? `config-${toMailValue}` : '';
     const endpointValue = data?.endpoint || '';
     const tokenValue = data?.token || '';
+    const publicKeyValue = data?.publicKey || '';
     const useAttachmentsValue = data?.useAttachments ?? false;
     const parseSubjectValue = data?.parseSubject ?? false;
     const spacerValue = data?.spacer || '';
@@ -73,6 +74,13 @@ const MailDataCard = (
         .setOnChangeAction(onChangeAction)
         .addItem('payload', 'payload', true)
         .addItem('bearer', 'bearer', false);
+
+
+    const publicKey = CardService.newTextInput()
+        .setFieldName('publicKey')
+        .setOnChangeAction(onChangeAction)
+        .setTitle('public key')
+        .setValue(publicKeyValue);
 
 
     const useAttachmentsSwitch = CardService.newSwitch()
@@ -165,6 +173,7 @@ const MailDataCard = (
         .addWidget(endpointType)
         .addWidget(token)
         .addWidget(tokenType)
+        .addWidget(publicKey)
         .addWidget(useAttachments)
         .addWidget(parseSubject)
         .addWidget(spacer)

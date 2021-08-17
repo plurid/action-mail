@@ -7,6 +7,7 @@
 
     import {
         PAGE_SIZE,
+        PLURID_API_ENDPOINT,
     } from '../../data/constants';
 
     import {
@@ -95,6 +96,14 @@ export const getFielders = (
 }
 
 
+export const encrypt = (
+    value: any,
+    publicKey: string,
+) => {
+    return '';
+}
+
+
 export const sendMessage = (
     metadata: any,
     data: any,
@@ -102,10 +111,11 @@ export const sendMessage = (
     endpointType: string,
     token: string,
     tokenType: string,
+    publicKey: string,
 ) => {
     const actionMail = {
-        metadata,
-        data,
+        metadata: encrypt(metadata, publicKey),
+        data: encrypt(data, publicKey),
     };
     if (tokenType === 'payload') {
         actionMail['token'] = token;
@@ -183,6 +193,7 @@ export function handleMessage(
         endpointType,
         token,
         tokenType,
+        publicKey,
         useAttachments,
         parseSubject,
         spacer,
@@ -252,6 +263,7 @@ export function handleMessage(
         endpointType,
         token,
         tokenType,
+        publicKey,
     );
 
 
