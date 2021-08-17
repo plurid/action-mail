@@ -67,14 +67,18 @@ const MailDataCard = (
         .addItem('bearer', 'bearer', false);
 
 
-    const useAttachments = CardService.newSelectionInput()
-        .setType(CardService.SelectionInputType.RADIO_BUTTON)
-        .setTitle('use attachments')
+    const useAttachmentsSwitch = CardService.newSwitch()
         .setFieldName('useAttachments')
+        .setValue('true')
         .setOnChangeAction(onChangeAction)
-        .addItem('yes', 'true', true)
-        .addItem('no', 'false', false);
-
+        .setControlType(
+            CardService.SwitchControlType.CHECK_BOX,
+        );
+    const useAttachments = CardService.newDecoratedText()
+        .setText('use attachments')
+        .setSwitchControl(
+            useAttachmentsSwitch,
+        );
 
     const spacer = CardService.newTextInput()
         .setFieldName('spacer')
@@ -82,13 +86,19 @@ const MailDataCard = (
         .setTitle('spacer')
         .setValue(spacerValue);
 
-    const camelCaseKeys = CardService.newSelectionInput()
-        .setType(CardService.SelectionInputType.RADIO_BUTTON)
-        .setTitle('camel case keys')
+
+    const camelCaseKeysSwitch = CardService.newSwitch()
         .setFieldName('camelCaseKeys')
+        .setValue('true')
         .setOnChangeAction(onChangeAction)
-        .addItem('yes', 'true', true)
-        .addItem('no', 'false', false);
+        .setControlType(
+            CardService.SwitchControlType.CHECK_BOX,
+        );
+    const camelCaseKeys = CardService.newDecoratedText()
+        .setText('camel case keys')
+        .setSwitchControl(
+            camelCaseKeysSwitch,
+        );
 
 
     const addAction = CardService.newAction()

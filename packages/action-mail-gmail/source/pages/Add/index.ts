@@ -37,6 +37,11 @@ export const addPageFields = [
     'camelCaseKeys',
 ];
 
+export const addPageFieldsBooleans = [
+    'useAttachments',
+    'camelCaseKeys',
+];
+
 
 export function onChangeAddPage(
     event: any,
@@ -44,18 +49,26 @@ export function onChangeAddPage(
     const data: any = {};
 
     for (const field of addPageFields) {
-        let value = event.formInput[field];
+        const value = event.formInput[field];
 
-        if (value) {
+        if (typeof value === 'string') {
             if (value === 'true') {
-                value = true;
+                data[field] = true;
+                continue;
             }
-
             if (value === 'false') {
-                value = false;
+                data[field] = false;
+                continue;
             }
 
             data[field] = value;
+
+            continue;
+        }
+
+        if (!value && addPageFieldsBooleans.includes(field)) {
+            data[field] = false;
+            continue;
         }
     }
 
