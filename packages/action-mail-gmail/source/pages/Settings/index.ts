@@ -74,13 +74,14 @@ export const buildSettingsCard = () => {
 
 
     const onChangeAction = CardService.newAction()
-    .setFunctionName('onChangeSettingsPage');
+        .setFunctionName('onChangeSettingsPage');
 
 
     const timeLocale = CardService.newTextInput()
         .setFieldName('timeLocale')
         .setOnChangeAction(onChangeAction)
         .setTitle('time locale')
+        .setHint('ISO 639-1 codes')
         .setValue(timeLocaleValue);
 
 
