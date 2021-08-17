@@ -19,7 +19,11 @@ const MailDataCard = (
     const configID = toMailValue ? `config-${toMailValue}` : '';
     const endpointValue = data?.endpoint || '';
     const tokenValue = data?.token || '';
+    const useAttachmentsValue = data?.useAttachments ?? false;
+    const parseSubjectValue = data?.parseSubject ?? false;
     const spacerValue = data?.spacer || '';
+    const camelCaseKeysValue = data?.camelCaseKeys ?? false;
+
 
     const banner = CardService.newImage()
         .setImageUrl(BANNER_ICON_URL);
@@ -36,6 +40,7 @@ const MailDataCard = (
         .setOnChangeAction(onChangeAction)
         .setTitle('to mail')
         .setValue(toMailValue);
+
 
     const endpoint = CardService.newTextInput()
         .setFieldName('endpoint')
@@ -71,6 +76,7 @@ const MailDataCard = (
         .setFieldName('useAttachments')
         .setValue('true')
         .setOnChangeAction(onChangeAction)
+        .setSelected(useAttachmentsValue)
         .setControlType(
             CardService.SwitchControlType.CHECK_BOX,
         );
@@ -85,6 +91,7 @@ const MailDataCard = (
         .setFieldName('parseSubject')
         .setValue('true')
         .setOnChangeAction(onChangeAction)
+        .setSelected(parseSubjectValue)
         .setControlType(
             CardService.SwitchControlType.CHECK_BOX,
         );
@@ -106,6 +113,7 @@ const MailDataCard = (
         .setFieldName('camelCaseKeys')
         .setValue('true')
         .setOnChangeAction(onChangeAction)
+        .setSelected(camelCaseKeysValue)
         .setControlType(
             CardService.SwitchControlType.CHECK_BOX,
         );
