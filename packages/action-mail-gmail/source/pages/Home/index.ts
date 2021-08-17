@@ -41,7 +41,7 @@ export const getMails = () => {
                 !configData.toMail
                 || !configData.endpoint
             ) {
-                return;
+                continue;
             }
 
 
