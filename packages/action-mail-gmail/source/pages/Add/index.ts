@@ -33,12 +33,14 @@ export const addPageFields = [
     'token',
     'tokenType',
     'useAttachments',
+    'parseSubject',
     'spacer',
     'camelCaseKeys',
 ];
 
 export const addPageFieldsBooleans = [
     'useAttachments',
+    'parseSubject',
     'camelCaseKeys',
 ];
 

@@ -142,11 +142,12 @@ export function handleMessage(
     const {
         endpoint,
         endpointType,
-        spacer,
-        camelCaseKeys,
         token,
         tokenType,
         useAttachments,
+        parseSubject,
+        spacer,
+        camelCaseKeys,
     } = config;
 
 
@@ -176,8 +177,12 @@ export function handleMessage(
         }
     }
 
+    const parserData = parseSubject
+        ? subject + ' ' + body
+        : body;
+
     const data = parser(
-        body,
+        parserData,
         {
             spacer,
             camelCaseKeys,

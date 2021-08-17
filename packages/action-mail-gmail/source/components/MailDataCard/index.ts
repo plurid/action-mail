@@ -80,6 +80,21 @@ const MailDataCard = (
             useAttachmentsSwitch,
         );
 
+
+    const parseSubjectSwitch = CardService.newSwitch()
+        .setFieldName('parseSubject')
+        .setValue('true')
+        .setOnChangeAction(onChangeAction)
+        .setControlType(
+            CardService.SwitchControlType.CHECK_BOX,
+        );
+    const parseSubject = CardService.newDecoratedText()
+        .setText('parse subject')
+        .setSwitchControl(
+            parseSubjectSwitch,
+        );
+
+
     const spacer = CardService.newTextInput()
         .setFieldName('spacer')
         .setOnChangeAction(onChangeAction)
@@ -131,6 +146,7 @@ const MailDataCard = (
         .addWidget(token)
         .addWidget(tokenType)
         .addWidget(useAttachments)
+        .addWidget(parseSubject)
         .addWidget(spacer)
         .addWidget(camelCaseKeys)
         .addWidget(addButton);
