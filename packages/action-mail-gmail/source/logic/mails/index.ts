@@ -98,7 +98,7 @@ export const getFielders = (
 
 export const generateAESKey = (
 ) => {
-    return uuid() + uuid() + uuid() + uuid();
+    return uuid();
 }
 
 
