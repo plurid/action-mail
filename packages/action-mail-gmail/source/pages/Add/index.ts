@@ -81,10 +81,17 @@ export function onChangeAddPage(
 
 export function submitAddPage() {
     const newConfigData = propertiesGet(PROPERTIES_ADD_CONFIG);
-    const configName = `config-${newConfigData.toMail}`;
-    if (!newConfigData || !configName) {
-        return;
+    if (!newConfigData) {
+        return handleHomePage();
     }
+    if (
+        !newConfigData.toMail
+        || !newConfigData.endpoint
+    ) {
+        return handleHomePage();
+    }
+
+    const configName = `config-${newConfigData.toMail}`;
 
 
     const currentConfigData = propertiesGet(configName);
@@ -94,12 +101,6 @@ export function submitAddPage() {
         ...newConfigData,
     };
 
-    if (
-        !configData.toMail
-        || !configData.endpoint
-    ) {
-        return;
-    }
 
     propertiesSet(
         configName,
