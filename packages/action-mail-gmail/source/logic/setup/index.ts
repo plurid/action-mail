@@ -2,7 +2,7 @@
 export const TRIGGER_NAME = 'handleNewMails';
 
 
-export const INTERVAL = 2; // minutes
+export const INTERVAL = 1; // minutes
 
 
 export function InstallGmail() {
