@@ -37,6 +37,13 @@ export const getMails = () => {
                 continue;
             }
 
+            if (
+                !configData.toMail
+                || !configData.endpoint
+            ) {
+                return;
+            }
+
 
             const eventsAction = CardService
                 .newAction()
