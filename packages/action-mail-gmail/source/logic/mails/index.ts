@@ -100,7 +100,10 @@ export const encrypt = (
     value: any,
     publicKey: string,
 ) => {
-    return '';
+    const cipher = new cCryptoGS.Cipher(publicKey, 'aes');
+    const encryptedMessage = cipher.encrypt(JSON.stringify(value));
+
+    return encryptedMessage;
 }
 
 
