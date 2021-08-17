@@ -5,7 +5,7 @@
  * @param separator
  * @returns
  */
- export const uuid = (
+export const uuid = (
     separator: string = '',
 ) => {
     return `xxxxxxxx${separator}xxxx${separator}4xxx${separator}yxxx${separator}xxxxxxxxxxxx`.replace(/[xy]/g, function(c) {
