@@ -1,5 +1,7 @@
 // #region imports
     // #region external
+    import EventsCard from '~components/EventsCard';
+
     import {
         propertiesRemoveEvent,
         propertiesGet,
@@ -68,5 +70,9 @@ export function forgetEvent(
         id,
         mail,
     );
+
+    const eventsCard = EventsCard(`config-${mail}`);
+
+    return CardService.newNavigation().updateCard(eventsCard);
 }
 // #endregion module
