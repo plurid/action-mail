@@ -1,27 +1,36 @@
 {
   "timeZone": "America/New_York",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
   "dependencies": {
     "enabledAdvancedServices": [
       {
         "userSymbol": "Gmail",
-        "version": "v1",
-        "serviceId": "gmail"
+        "serviceId": "gmail",
+        "version": "v1"
       }
     ]
   },
-  "exceptionLogging": "STACKDRIVER",
-  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/script.scriptapp",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://mail.google.com/"
+  ],
+  "urlFetchWhitelist": [
+    "https://plurid.com/"
+  ],
   "addOns": {
     "common": {
       "name": "Action Mail",
-      "logoUrl": "https://plurid.com/android-chrome-512x512.png",
+      "logoUrl": "https://raw.githubusercontent.com/plurid/action-mail/master/about/identity/action-mail-logo.png",
       "homepageTrigger": {
         "runFunction": "handleHomePage"
       },
       "universalActions": [
         {
           "label": "Settings",
-          "runFunction": "handleShowSettings"
+          "runFunction": "handleSettingsPage"
         }
       ],
       "openLinkUrlPrefixes": [],
