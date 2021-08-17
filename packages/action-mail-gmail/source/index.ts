@@ -10,7 +10,7 @@ export * from './services/cache';
 export * from './services/properties';
 export * from './services/utilities';
 
-export * from './components/MailDataCard';
+export * from './components';
 
 export * from './pages/Add';
 export * from './pages/Home';
