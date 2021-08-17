@@ -27,8 +27,8 @@ export const getEvents = (
     }
 
     const sortedEventsData = eventsData.sort((a, b) => {
-        if (a.parsedAt > b.parsedAt) return -1;
-        if (b.parsedAt > a.parsedAt) return 1;
+        if (a.sentAt > b.sentAt) return -1;
+        if (b.sentAt > a.sentAt) return 1;
 
         return 0;
     });
@@ -38,7 +38,7 @@ export const getEvents = (
             id,
             success,
             data,
-            parsedAt,
+            sentAt,
             sender,
         } = eventData;
 
@@ -51,7 +51,7 @@ export const getEvents = (
             .replace('<', '&lt;')
             .replace('>', '&gt;');
 
-        const dateValue = new Date(parsedAt).toLocaleString();
+        const dateValue = new Date(sentAt).toLocaleString();
 
         const text = CardService.newTextParagraph()
             .setText(`${successText} from ${cleanSender} on ${dateValue}`);

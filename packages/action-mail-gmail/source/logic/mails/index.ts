@@ -118,6 +118,7 @@ export const sendMessage = (
         metadata,
         id: metadata.id,
         parsedAt: metadata.parsedAt,
+        sentAt: Date.now(),
         sender: metadata.message.sender,
         receiver: metadata.message.receiver,
     };
