@@ -42,8 +42,8 @@ An user could desire to be `accountless` and at the same time be interested in a
 + [Syntax](#syntax)
 + [Usage](#usage)
     + [Parser](#parser)
-        + [Dolphin example](#dolphin-example)
-        + [World example](#world-example)
+        + [Dolphin Example](#dolphin-example)
+        + [World Example](#world-example)
         + [Advanced](#advanced)
     + [Clients](#clients)
         + [Gmail](#gmail)
@@ -73,7 +73,7 @@ An `action mail field` can have multiple `entities` or `values`, using a `spacer
 In-browser `action mail`s are composed on the client-side using an anchor `a` tag with the `href` attribute set to `mailto`, where the query values of `subject` and `body` are `encodeURIComponent` strings with the `action mail` syntax interspersing the text.
 
 
-#### Dolphin example
+#### Dolphin Example
 
 Consider the following example with a `jsx` `BuyWithoutAccount` button
 
@@ -126,7 +126,7 @@ The data structure can then be used to `POST` an API endpoint which will take ca
 The mail client add-ons handle parsing and calling the adequate API endpoint, with the appropriate authorization token.
 
 
-#### World example
+#### World Example
 
 A sales `action mail` could use the following `subject` and `body`.
 
