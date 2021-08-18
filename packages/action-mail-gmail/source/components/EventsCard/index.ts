@@ -179,8 +179,8 @@ const EventsCard = (
 
     const section = CardService.newCardSection()
         .addWidget(banner)
-        .addWidget(forgetEventsButton)
-        .addWidget(header);
+        .addWidget(header)
+        .addWidget(forgetEventsButton);
 
 
     const card = CardService.newCardBuilder()
