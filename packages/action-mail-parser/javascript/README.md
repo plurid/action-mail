@@ -163,6 +163,11 @@ Thanks
 which when parsed with the following settings
 
 ``` typescript
+import {
+    parser,
+} from '@plurid/action-mail-parser';
+
+
 const data = requestSubject + requestBody;
 
 const values = parser(
@@ -198,12 +203,12 @@ obtains the data structure
 }
 ```
 
-The user of the service only has to complete the `name`, `country`, `city`, `street` fields, or they could be autofilled with predefined values if they also use the `action mail` mail client.
+The user only has to complete the `name`, `country`, `city`, `street` fields, or they could be autofilled with predefined values if they also use the `action mail` mail client.
 
 
 #### Advanced
 
-The parser options are
+The `parser` options are
 
 ``` typescript
 interface ParserOptions {
@@ -247,7 +252,7 @@ interface ParserOptions {
 ```
 
 
-When parsing multiple types of data, a `Registry` can be used to determine the type.
+When parsing multiple types of data, a `Registry` can be used to easily determine the data structure type.
 
 
 ``` typescript
@@ -276,8 +281,11 @@ const main = () => {
     const dataOne = `one {two: data one} {three}`;
     /**
      * {
-     *   two: 'data one',
-     *   three: true,
+     *   type: 'one',
+     *   values: {
+     *     two: 'data one',
+     *     three: true,
+     *   },
      * }
      */
     const parseOne = registry.parse<DataOne>(dataOne);
