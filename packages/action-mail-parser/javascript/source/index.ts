@@ -9,6 +9,9 @@
 
 
 // #region module
+export * from './data/constants';
+export * from './data/interfaces';
+
 export {
     parser,
 

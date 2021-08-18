@@ -41,5 +41,15 @@ export interface ParserOptions {
      * Default `[ ['{', '}'] ]`
      */
     fielders: string[][];
+
+    /**
+     * Negation words (strings or regular expressions) to negate the value of a field.
+     *
+     * e.g. `{no foo}` gives `{ foo: false }`.
+     */
+    negations: Negation[];
 }
+
+
+export type Negation = string | RegExp;
 // #endregion module

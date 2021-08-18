@@ -1,14 +1,24 @@
+// #region imports
+    // #region external
+    import {
+        Negation,
+    } from '~data/interfaces';
+    // #endregion external
+// #endregion imports
+
+
+
 // #region module
 export const defaultFielders = [
     ['{', '}'],
 ];
 
 
-export const negations = [
-    /^no\s/,
-    /^not\s/,
-    /^none\s/,
-    /^don't\s/,
-    /^do not\s/,
+export const negations: Negation[] = [
+    `no`,
+    `not`,
+    `none`,
+    `don't`,
+    `do not`,
 ];
 // #endregion module

@@ -28,8 +28,12 @@ export const valueOfToken = (
         let value = true;
 
         for (const negation of negations) {
-            if (key.match(negation)) {
-                key = key.replace(negation, '');
+            const negationRE = typeof negation === 'string'
+                ? new RegExp(`^${negation}\\s`)
+                : negation;
+
+            if (key.match(negationRE)) {
+                key = key.replace(negationRE, '');
                 value = false;
                 break;
             }
