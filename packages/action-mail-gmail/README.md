@@ -348,7 +348,7 @@ Generate private/public key pairs using
 
 ```
 # generate private key
-openssl genrsa -des3 -out action-mail.private.pem 2048
+openssl genrsa -des3 -out action-mail.private.pem 4096
 
 # extract public key
 openssl rsa -in action-mail.private.pem -outform PEM -pubout -out action-mail.public.pem
