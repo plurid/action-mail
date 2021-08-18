@@ -7,7 +7,8 @@
 
     import {
         PAGE_SIZE,
-        PLURID_API_ENDPOINT,
+        API_ENDPOINT,
+        API_TYPE,
     } from '../../data/constants';
 
     import {
@@ -147,6 +148,8 @@ export const sendMessage = (
     const actionMail = {
         metadata: encrypt(metadata, publicKey),
         data: encrypt(data, publicKey),
+        endpoint,
+        endpointType,
     };
     if (tokenType === 'payload') {
         actionMail['token'] = token;
@@ -160,7 +163,7 @@ export const sendMessage = (
 
 
     let payload;
-    switch (endpointType) {
+    switch (API_TYPE) {
         case 'graphql':
             payload = notifyActionMailGraphql(
                 actionMail,
@@ -183,7 +186,7 @@ export const sendMessage = (
         headers,
     };
 
-    const post = UrlFetchApp.fetch(endpoint, options);
+    const post = UrlFetchApp.fetch(API_ENDPOINT, options);
     const responseCode = post.getResponseCode();
 
     let success = true;
