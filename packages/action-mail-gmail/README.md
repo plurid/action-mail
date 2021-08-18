@@ -75,7 +75,7 @@ In-browser `action mail`s are composed on the client-side using an anchor `a` ta
 
 #### Dolphin Example
 
-Consider the following example with a `jsx` `BuyWithoutAccount` button
+Consider the following dummy example with a `jsx` `BuyWithoutAccount` button
 
 ``` tsx
 const mail = 'address@example.com';
