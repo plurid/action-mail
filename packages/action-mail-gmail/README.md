@@ -179,7 +179,7 @@ obtains the data structure
 }
 ```
 
-The user of the service only has to complete the `name`, `country`, `city`, `street` fields, or they could be automatically completed with predefined values if they also use the `action mail` mail client.
+The user of the service only has to complete the `name`, `country`, `city`, `street` fields, or they could be autofilled with predefined values if they also use the `action mail` mail client.
 
 
 ### Advanced
@@ -204,6 +204,8 @@ interface ParserOptions {
 
     /**
      * Use `camelCase` for all the keys.
+     *
+     * Default: `false`
      */
     camelCaseKeys: boolean;
 
@@ -212,10 +214,50 @@ interface ParserOptions {
      *
      * The first element marks field start, the second element marks field end.
      *
-     * Default `[ ['{', '}'] ]`.
+     * Default `[ ['{', '}'] ]`
      */
     fielders: string[][];
 }
+```
+
+
+When parsing multiple types of data, a `Registry` can be used to determine the type.
+
+
+``` typescript
+import {
+    Registry,
+} from '@plurid/action-mail-parser';
+
+
+const main = () => {
+    const registry = new Registry();
+
+    registry.register({
+        type: 'one',
+        shape: {
+            two: 'string',
+            three: 'boolean',
+        },
+    });
+
+
+    interface DataOne {
+        two: string;
+        three: boolean;
+    }
+
+    const dataOne = `one {two: data one} {three}`;
+    /**
+     * {
+     *   two: 'data one',
+     *   three: true,
+     * }
+     */
+    const parseOne = registry.parse<DataOne>(dataOne);
+}
+
+main();
 ```
 
 
