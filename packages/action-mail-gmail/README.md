@@ -39,6 +39,7 @@ An user could desire to be `accountless` and at the same time be interested in a
 
 ### Contents
 
++ [Syntax](#syntax)
 + [Usage](#usage)
     + [Parser](#parser)
         + [Dolphin example](#dolphin-example)
@@ -51,12 +52,25 @@ An user could desire to be `accountless` and at the same time be interested in a
 
 
 
-## Usage
+## Syntax
 
+An `action mail field` is enclosed in `{` and `}`, or in `[` and `]`, or in other characters that have a general delimiting semantic.
+
+An `action mail field` can be an `action entity` or an `action value`.
+
+The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated using commong language: don't, no, none; e.g. `{don't send}`.
+
+The `action mail value` expects a value after the colon, e.g. `{name: one}`, `{zip code: 012345}`.
+
+An `action mail field` can have multiple `entities` or `values`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s.
+
+
+
+## Usage
 
 ### Parser
 
-In-browser `action mail`s are composed on the client-side using an anchor `a` tag with the `href` attribute set to `mailto`, where the query values of `subject` and `body` are `encodeURIComponent` strings with the text interspersing the `action mail` syntax.
+In-browser `action mail`s are composed on the client-side using an anchor `a` tag with the `href` attribute set to `mailto`, where the query values of `subject` and `body` are `encodeURIComponent` strings with the `action mail` syntax interspersing the text.
 
 
 #### Dolphin example
