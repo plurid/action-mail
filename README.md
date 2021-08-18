@@ -289,14 +289,14 @@ main();
 
 ### Clients
 
-The `action mail` client listen for new mails, parses them accordingly, and sends the parsed data to the appropriate API endpoint.
+The `action mail` client listens for new mails, parses them accordingly, and sends the parsed data to the appropriate API `endpoint`.
 
 
 ### Gmail
 
-The Gmail Action Mail client is a Google Workspace Add-on which can be installed in gmail.
+The [Gmail Action Mail]((https://plurid.com/action-mail)) client is a Google Workspace Add-on which can be installed in Gmail.
 
-To use the Action Mail, add a mail providing the required information: `to mail`, `endpoint`, `token`, `public key`.
+To use the Action Mail, `Add Mail` providing the required information: `to mail`, `endpoint`, `token`, `public key`.
 
 
 <p align="center">
@@ -304,11 +304,11 @@ To use the Action Mail, add a mail providing the required information: `to mail`
 </p>
 
 
-The `to mail` is the mail which receives action mails, if multiple configured in Gmail, e.g. `example@gmail.com`.
+The `to mail` is the mail which receives action mails, if multiple mails configured in Gmail, e.g. `example@gmail.com`.
 
-The `endpoint` is a `https` API endpoint, e.g. `https://api.example.com`. The endpoint can be a REST or GraphQL.
+The `endpoint` is a `https` API endpoint, e.g. `https://api.example.com`. The endpoint can be `REST` or `GraphQL`.
 
-The GraphQL types are
+The `GraphQL` types are
 
 ``` graphql
 mutation ActionMailCall(input: ActionMailCallInput!): ActionMailResponse!
@@ -341,16 +341,22 @@ Generate private/public key pairs using
 
 ```
 # generate private key
-openssl genrsa -des3 -out private.pem 2048
+openssl genrsa -des3 -out action-mail.private.pem 2048
 
 # extract public key
-openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+openssl rsa -in action-mail.private.pem -outform PEM -pubout -out action-mail.public.pem
 ```
 
-The encryption scheme is hybrid. The `data` and the `metadata` are converted to strings, unique AES keys are generated to encrypt the values, the AES keys are encrypted with the `public key` and sent together to the `endpoint`. The call interface is
+The encryption scheme is hybrid:
+
++ the `data` and the `metadata` objects are converted to strings,
++ unique AES keys are generated to encrypt the values,
++ the generated AES keys are encrypted with the `public key` and sent together to the `endpoint`.
+
+The call interface is
 
 ``` typescript
-interface Call {
+interface ActionMailCall {
     data: {
         aes: string;
         text: string;
@@ -360,6 +366,34 @@ interface Call {
         text: string;
     };
     token: string;
+}
+```
+
+The `metadata` interface is
+
+``` typescript
+interface ActionMailMetadata {
+    id: string;
+    parsedAt: number;
+    message: ActionMailMetadataMessage;
+}
+
+interface ActionMailMetadataMessage {
+    id: string;
+    sender: string;
+    receiver: string;
+    subject: string
+    body: string
+    date: number;
+    attachments: ActionMailMetadataAttachment[];
+}
+
+interface ActionMailMetadataAttachment {
+    name: string;
+    hash: string;
+    size: number;
+    contentType: string;
+    bytes: number[];
 }
 ```
 
@@ -424,6 +458,27 @@ const decrypt = (
     );
 
     return load;
+}
+```
+
+
+The `attachments`, if any, can be saved to the filesystem, given the correctly `JSON.parse`d `metadata` object.
+
+``` typescript
+import {
+    promises as fs,
+} from 'fs';
+
+for (const attachment of metadata.message.attachments) {
+    const {
+        name,
+        bytes,
+    } = attachment;
+
+    fs.writeFile(
+        name,
+        Buffer.from(bytes),
+    );
 }
 ```
 
