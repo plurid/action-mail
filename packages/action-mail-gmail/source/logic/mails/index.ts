@@ -125,7 +125,7 @@ export const encrypt = (
     const cipher = new cCryptoGS.Cipher(aesKey, 'aes');
     const encryptedText = cipher.encrypt(text);
 
-    const jsEncrypt = new JSEncrypt()
+    const jsEncrypt = new JSEncrypt();
     jsEncrypt.setPublicKey(publicKey);
     const encryptedAES = jsEncrypt.encrypt(aesKey);
 
