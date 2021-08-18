@@ -31,7 +31,7 @@ export interface Attachment {
 export interface Metadata {
     id: string;
     parsedAt: number;
-    message: MetadataMessage,
+    message: MetadataMessage;
 }
 
 
