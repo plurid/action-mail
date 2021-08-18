@@ -40,9 +40,12 @@ An user could desire to be `accountless` and at the same time be interested in a
 ### Contents
 
 + [Usage](#usage)
-    + [Dolphin example](#dolphin-example)
-    + [World example](#world-example)
-    + [Advanced](#advanced)
+    + [Parser](#parser)
+        + [Dolphin example](#dolphin-example)
+        + [World example](#world-example)
+        + [Advanced](#advanced)
+    + [Clients](#clients)
+        + [Gmail](#gmail)
 + [Packages](#packages)
 + [Codeophon](#codeophon)
 
@@ -51,10 +54,12 @@ An user could desire to be `accountless` and at the same time be interested in a
 ## Usage
 
 
+### Parser
+
 In-browser `action mail`s are composed on the client-side using an anchor `a` tag with the `href` attribute set to `mailto`, where the query values of `subject` and `body` are `encodeURIComponent` strings with the text interspersing the `action mail` syntax.
 
 
-### Dolphin example
+#### Dolphin example
 
 Consider the following example with a `jsx` `BuyWithoutAccount` button
 
@@ -107,7 +112,7 @@ The data structure can then be used to `POST` an API endpoint which will take ca
 The mail client add-ons handle parsing and calling the adequate API endpoint, with the appropriate authorization token.
 
 
-### World example
+#### World example
 
 A sales `action mail` could use the following `subject` and `body`.
 
@@ -182,7 +187,7 @@ obtains the data structure
 The user of the service only has to complete the `name`, `country`, `city`, `street` fields, or they could be autofilled with predefined values if they also use the `action mail` mail client.
 
 
-### Advanced
+#### Advanced
 
 The parser options are
 
@@ -265,6 +270,44 @@ const main = () => {
 }
 
 main();
+```
+
+
+### Clients
+
+The `action mail` client listen for new mails, parses them accordingly, and sends the parsed data to the appropriate API endpoint.
+
+
+### Gmail
+
+The Gmail Action Mail client is a Google Workspace Add-on which can be installed in gmail.
+
+To use the Action Mail, add a mail providing the required information: `to mail`, `endpoint`, `token`, `public key`.
+
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/presentation/action-mail-gmail-add.png" height="700px">
+</p>
+
+
+Due to a limitation in dynamically whitelisting URLs for the [URL Fetch Google Apps Script Service](https://developers.google.com/apps-script/manifest#Manifest.FIELDS.urlFetchWhitelist), the configured `endpoint` will be called from `https://api.plurid.com`.
+
+The `public key` will be used to encrypt the `data` and `metadata` on the add-on side.
+
+The encryption scheme is hybrid. The `data` and the `metadata` are converted to strings, unique AES keys are generated to encrypt the values, the AES keys are encrypted with the `public key` and sent together to the `endpoint`. The call interface is
+
+``` typescript
+interface Call {
+    data: {
+        aes: string;
+        text: string;
+    };
+    metadata: {
+        aes: string;
+        text: string;
+    };
+    token: string;
+}
 ```
 
 
