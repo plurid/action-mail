@@ -290,9 +290,48 @@ To use the Action Mail, add a mail providing the required information: `to mail`
 </p>
 
 
+The `to mail` is the mail which receives action mails, if multiple configured in Gmail, e.g. `example@gmail.com`.
+
+The `endpoint` is a `https` API endpoint, e.g. `https://api.example.com`. The endpoint can be a REST or GraphQL.
+
+The GraphQL types are
+
+``` graphql
+mutation ActionMailCall(input: ActionMailCallInput!): ActionMailResponse!
+
+
+input ActionMailCallInput {
+    data: ActionMailCallInputCrypted!
+    metadata: ActionMailCallInputCrypted!
+    token: String
+}
+
+input ActionMailCallInputCrypted {
+    aes: String!
+    text: String!
+}
+
+
+type ActionMailResponse {
+    status: Boolean!
+}
+```
+
+The `token` is generated and will be checked on the `endpoint`-side and can be attached to the `payload` or added as a `bearer` header, e.g. `Authorization: Bearer <token>`.
+
 Due to a limitation in dynamically whitelisting URLs for the [URL Fetch Google Apps Script Service](https://developers.google.com/apps-script/manifest#Manifest.FIELDS.urlFetchWhitelist), the configured `endpoint` will be called from `https://api.plurid.com`.
 
 The `public key` will be used to encrypt the `data` and `metadata` on the add-on side.
+
+Generate private/public key pairs using
+
+```
+# generate private key
+openssl genrsa -des3 -out private.pem 2048
+
+# extract public key
+openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+```
 
 The encryption scheme is hybrid. The `data` and the `metadata` are converted to strings, unique AES keys are generated to encrypt the values, the AES keys are encrypted with the `public key` and sent together to the `endpoint`. The call interface is
 
@@ -307,6 +346,70 @@ interface Call {
         text: string;
     };
     token: string;
+}
+```
+
+
+A decryption implementation in NodeJS could look like this (see more in `fixtures/test-endpoint`).
+
+
+``` typescript
+import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
+
+
+interface Crypted {
+    text: string;
+    aes: string;
+}
+
+
+const decryptAes = (
+    aes: string,
+    privateKey: string,
+) => {
+    const aesKey = crypto.privateDecrypt(
+        {
+            key: privateKey,
+            padding: crypto.constants.RSA_PKCS1_PADDING,
+        },
+        Buffer.from(aes, 'base64'),
+    );
+
+    return aesKey.toString();
+}
+
+const decryptLoad = (
+    aesKey: string,
+    load: string,
+) => {
+    const aesBytes = CryptoJS.AES.decrypt(load, aesKey.toString());
+    const clearText = JSON.parse(aesBytes.toString(CryptoJS.enc.Utf8));
+
+    return clearText;
+}
+
+const decrypt = (
+    crypted: Crypted,
+): any => {
+    const {
+        aes,
+        text,
+    } = crypted;
+
+    const privateKey = `-----BEGIN RSA PRIVATE KEY-----...`;
+
+    const aesKey = decryptAes(
+        aes,
+        privateKey,
+    );
+
+    const load = decryptLoad(
+        aesKey,
+        text,
+    );
+
+    return load;
 }
 ```
 
