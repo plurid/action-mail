@@ -46,66 +46,70 @@ export const getEvents = (
         });
 
         for (const eventData of sortedEventsData) {
-            const {
-                id,
-                success,
-                data,
-                sentAt,
-                sender,
-            } = eventData;
-
-
-            const successText = success
-                ? '[sent]'
-                : '[error';
-
-            const cleanSender = sender
-                .replace('<', '&lt;')
-                .replace('>', '&gt;');
-
-            const dateValue = new Date(sentAt).toLocaleString(settings?.timeLocale || DEFAULT_TIME_LOCALE);
-
-            const text = CardService.newTextParagraph()
-                .setText(`${successText} from ${cleanSender} on ${dateValue}`);
-
-
-            const dataValue = Object.keys(data).length === 0
-                ? 'no actions'
-                : JSON.stringify(data, null, 2);
-            const dataText = CardService.newTextParagraph()
-                .setText(dataValue);
-
-
-            const resendAction = CardService.newAction()
-                .setFunctionName('resendEvent')
-                .setParameters({
+            try {
+                const {
                     id,
-                    mail: toMail,
-                });
-            const resendButton = CardService.newDecoratedText()
-                .setText('Resend Event')
-                .setIconUrl(RESET_ICON_URL)
-                .setOnClickAction(resendAction);
+                    success,
+                    data,
+                    sentAt,
+                    sender,
+                } = eventData;
 
 
-            const forgetAction = CardService.newAction()
-                .setFunctionName('forgetEvent')
-                .setParameters({
-                    id,
-                    mail: toMail,
-                });
-            const forgetButton = CardService.newDecoratedText()
-                .setText('Forget Event')
-                .setIconUrl(OBLITERATE_ICON_URL)
-                .setOnClickAction(forgetAction);
+                const successText = success
+                    ? '[sent]'
+                    : '[error';
 
-            const section = CardService.newCardSection()
-                .addWidget(text)
-                .addWidget(dataText)
-                .addWidget(resendButton)
-                .addWidget(forgetButton);
+                const cleanSender = sender
+                    .replace('<', '&lt;')
+                    .replace('>', '&gt;');
 
-            events.push(section);
+                const dateValue = new Date(sentAt).toLocaleString(settings?.timeLocale || DEFAULT_TIME_LOCALE);
+
+                const text = CardService.newTextParagraph()
+                    .setText(`${successText} from ${cleanSender} on ${dateValue}`);
+
+
+                const dataValue = Object.keys(data).length === 0
+                    ? 'no actions'
+                    : JSON.stringify(data, null, 2);
+                const dataText = CardService.newTextParagraph()
+                    .setText(dataValue);
+
+
+                const resendAction = CardService.newAction()
+                    .setFunctionName('resendEvent')
+                    .setParameters({
+                        id,
+                        mail: toMail,
+                    });
+                const resendButton = CardService.newDecoratedText()
+                    .setText('Resend Event')
+                    .setIconUrl(RESET_ICON_URL)
+                    .setOnClickAction(resendAction);
+
+
+                const forgetAction = CardService.newAction()
+                    .setFunctionName('forgetEvent')
+                    .setParameters({
+                        id,
+                        mail: toMail,
+                    });
+                const forgetButton = CardService.newDecoratedText()
+                    .setText('Forget Event')
+                    .setIconUrl(OBLITERATE_ICON_URL)
+                    .setOnClickAction(forgetAction);
+
+                const section = CardService.newCardSection()
+                    .addWidget(text)
+                    .addWidget(dataText)
+                    .addWidget(resendButton)
+                    .addWidget(forgetButton);
+
+                events.push(section);
+            } catch (error) {
+                continue;
+            }
         }
 
         return events;
