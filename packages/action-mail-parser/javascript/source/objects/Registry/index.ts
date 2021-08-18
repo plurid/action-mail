@@ -25,9 +25,12 @@ class Registry {
         entry: RegistryEntry,
     ) {
         const shapeKeys = computeKeysStringFromObject(entry.shape);
+        const entryKey = entry.groupsLength
+            ? shapeKeys + entry.groupsLength
+            : shapeKeys;
 
         this.entries.set(
-            shapeKeys,
+            entryKey,
             entry,
         );
     }
@@ -45,8 +48,12 @@ class Registry {
         }
 
         const valuesKeys = computeKeysStringFromObject(values);
+        const groups = values[options?.groupsKey || 'groups'];
+        const entryKey = groups && groups.length
+            ? valuesKeys + groups.length
+            : valuesKeys;
 
-        const entry = this.entries.get(valuesKeys);
+        const entry = this.entries.get(entryKey);
         if (!entry) {
             return;
         }
