@@ -56,7 +56,7 @@ const decryptLoad = (
 
 const decrypt = (
     crypted: Crypted,
-): string => {
+): any => {
     const {
         aes,
         text,
@@ -82,6 +82,7 @@ const handleRequest = async (
 ) => {
     const clearMetadata = decrypt(metadata);
     console.log('clearMetadata', clearMetadata);
+    console.log('clearMetadata files', clearMetadata.message?.attachments);
 
     const clearData = decrypt(data);
     console.log('clearData', clearData);
