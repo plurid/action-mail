@@ -38,7 +38,7 @@ export interface ParserOptions {
      *
      * The first element marks field start, the second element marks field end.
      *
-     * Default `[ ['{', '}'] ]`.
+     * Default `[ ['{', '}'] ]`
      */
     fielders: string[][];
 }
