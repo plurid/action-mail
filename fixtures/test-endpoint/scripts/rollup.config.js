@@ -25,8 +25,10 @@ const build = {
         },
     ],
     external: [
-        'body-parser',
+        'fs',
         'crypto',
+
+        'body-parser',
         'crypto-js',
         'express',
     ],
