@@ -6,6 +6,10 @@
 
         ADD_ICON_URL,
     } from '~data/constants';
+
+    import {
+        MailConfiguration,
+    } from '~data/interfaces';
     // #endregion external
 // #endregion imports
 
@@ -13,7 +17,7 @@
 
 // #region module
 const MailDataCard = (
-    data?: any,
+    data?: MailConfiguration,
 ) => {
     const toMailValue = data?.toMail || '';
     const configID = toMailValue ? `config-${toMailValue}` : '';

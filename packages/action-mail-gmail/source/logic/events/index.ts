@@ -6,9 +6,11 @@
         propertiesRemoveEvent,
         propertiesGet,
         propertiesGetEvent,
+        propertiesGetEvents,
     } from '~services/properties';
 
     import {
+        generateMetadata,
         sendMessage,
     } from '../mails';
     // #endregion external
@@ -45,9 +47,15 @@ export function resendEvent(
     }
 
     const {
-        metadata,
+        messageID,
         data,
     } = event;
+
+    const message = GmailApp.getMessageById(messageID);
+    if (!message) {
+        return;
+    }
+
 
     const {
         endpoint,
@@ -56,6 +64,12 @@ export function resendEvent(
         tokenType,
         publicKey,
     } = config;
+
+    const metadata = generateMetadata(
+        config,
+        message,
+    );
+
 
     sendMessage(
         metadata,
@@ -83,6 +97,26 @@ export function forgetEvent(
         id,
         mail,
     );
+
+    return refreshEventCard(mail);
+}
+
+
+export function forgetEvents(
+    call: any,
+) {
+    const {
+        mail,
+    } = call.parameters;
+
+    const eventsData = propertiesGetEvents(mail);
+
+    for (const eventData of eventsData) {
+        propertiesRemoveEvent(
+            eventData.id,
+            mail,
+        );
+    }
 
     return refreshEventCard(mail);
 }

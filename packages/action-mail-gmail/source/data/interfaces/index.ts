@@ -1,8 +1,30 @@
 // #region module
+export interface MailConfiguration {
+    toMail: string;
+    endpoint: string;
+    endpointType: string;
+    token: string;
+    tokenType: string;
+    publicKey: string;
+    parseSubject?: boolean;
+    useAttachments?: boolean;
+    spacer?: string;
+    camelCaseKeys?: boolean;
+    fielders?: string;
+}
+
+
+export interface Settings {
+    timeLocale: string;
+}
+
+
 export interface Attachment {
     name: string;
+    hash: string;
     size: number;
-    blob: GoogleAppsScript.Base.Blob;
+    contentType: string;
+    bytes: number[];
 }
 
 
@@ -27,7 +49,7 @@ export interface MetadataMessage {
 export interface SentMailEvent {
     success: boolean;
     data: any;
-    metadata: Metadata;
+    messageID: string;
     id: string;
     parsedAt: number;
     sentAt: number;

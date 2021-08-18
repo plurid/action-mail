@@ -1,6 +1,7 @@
 // #region imports
     import {
         Attachment,
+        MailConfiguration,
         SentMailEvent,
         Metadata,
     } from '../../data/interfaces';
@@ -137,7 +138,7 @@ export const encrypt = (
 
 
 export const sendMessage = (
-    metadata: any,
+    metadata: Metadata,
     data: any,
     endpoint: string,
     endpointType: string,
@@ -198,8 +199,8 @@ export const sendMessage = (
     const sentMail: SentMailEvent = {
         success,
         data,
-        metadata,
         id: metadata.id,
+        messageID: metadata.message.id,
         parsedAt: metadata.parsedAt,
         sentAt: Date.now(),
         sender: metadata.message.sender,
@@ -209,70 +210,55 @@ export const sendMessage = (
 }
 
 
-export function handleMessage(
+export const getAttachments = (
+    config: MailConfiguration,
     message: GoogleAppsScript.Gmail.GmailMessage,
-) {
-    const to = getMailFromAddress(message.getTo());
-    if (!to) {
-        return;
-    }
-
-    const config = propertiesGet(`config-${to}`);
-    if (!config) {
-        return;
-    }
-
-    const {
-        endpoint,
-        endpointType,
-        token,
-        tokenType,
-        publicKey,
-        useAttachments,
-        parseSubject,
-        spacer,
-        camelCaseKeys,
-        fielders,
-    } = config;
-
-
-    const id = uuid();
-    const parsedAt = Date.now();
-
-    const messageID = message.getId();
-    const sender = message.getFrom();
-    const subject = message.getSubject();
-    const body = message.getPlainBody();
-    const date = message.getDate();
-    const messageAttachments = message.getAttachments();
+) => {
     const attachments: Attachment[] = [];
 
-    if (useAttachments) {
+    const messageAttachments = message.getAttachments();
+
+    if (config.useAttachments) {
         for (const messageAttachment of messageAttachments) {
             const name = messageAttachment.getName();
+            const hash = messageAttachment.getHash();
             const size = messageAttachment.getSize();
-            const blob = messageAttachment.copyBlob();
+            const contentType = messageAttachment.getContentType();
+            const bytes = messageAttachment.getBytes();
 
             const attachment: Attachment = {
                 name,
+                hash,
                 size,
-                blob,
+                contentType,
+                bytes,
             };
             attachments.push(attachment);
         }
     }
 
-    const parserData = parseSubject
-        ? subject + ' ' + body
-        : body;
+    return attachments;
+}
 
-    const data = parser(
-        parserData,
-        {
-            spacer,
-            camelCaseKeys,
-            fielders: getFielders(fielders),
-        },
+
+export const generateMetadata = (
+    config: MailConfiguration,
+    message: GoogleAppsScript.Gmail.GmailMessage,
+) => {
+    const to = getMailFromAddress(message.getTo()) || '';
+
+    const id = uuid();
+    const parsedAt = Date.now();
+
+    const messageID = message.getId();
+    const subject = message.getSubject();
+    const body = message.getPlainBody();
+    const sender = message.getFrom();
+    const date = message.getDate();
+
+    const attachments = getAttachments(
+        config,
+        message,
     );
 
     const metadata: Metadata = {
@@ -289,6 +275,56 @@ export function handleMessage(
         },
     };
 
+    return metadata;
+}
+
+
+export function handleMessage(
+    message: GoogleAppsScript.Gmail.GmailMessage,
+) {
+    const to = getMailFromAddress(message.getTo());
+    if (!to) {
+        return;
+    }
+
+    const config: MailConfiguration | undefined = propertiesGet(`config-${to}`);
+    if (!config) {
+        return;
+    }
+
+    const {
+        endpoint,
+        endpointType,
+        token,
+        tokenType,
+        publicKey,
+        parseSubject,
+        spacer,
+        camelCaseKeys,
+        fielders,
+    } = config;
+
+
+    const subject = message.getSubject();
+    const body = message.getPlainBody();
+
+    const parserData = parseSubject
+        ? subject + ' ' + body
+        : body;
+
+    const data = parser(
+        parserData,
+        {
+            spacer,
+            camelCaseKeys,
+            fielders: getFielders(fielders),
+        },
+    );
+
+    const metadata = generateMetadata(
+        config,
+        message,
+    );
 
     sendMessage(
         metadata,
