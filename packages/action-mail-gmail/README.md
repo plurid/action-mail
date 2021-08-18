@@ -60,7 +60,7 @@ An `action mail field` can be an `action entity` or an `action variable`.
 
 The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated using common language: `don't`, `no`, `none`; e.g. `{don't send}`.
 
-The `action mail variables` expects a value after the colon, e.g. `{name: one}`, `{zip code: 012345}`.
+The `action mail variables` expect a value after the colon, e.g. `{name: one}`, `{zip code: 012345}`.
 
 An `action mail field` can have multiple `entities` or `variables`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s.
 
