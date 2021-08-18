@@ -1,5 +1,9 @@
 // #region imports
     // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
+
     import express from 'express';
     import {
         json as jsonParser,
@@ -76,16 +80,37 @@ const decrypt = (
 }
 
 
+const saveAttachments = async (
+    metadata: any,
+) => {
+    if (metadata.message.attachments.length > 0) {
+        for (const attachment of metadata.message.attachments) {
+            const {
+                name,
+                bytes,
+            } = attachment;
+
+            fs.writeFile(
+                name,
+                Buffer.from(bytes),
+            );
+        }
+    }
+}
+
+
 const handleRequest = async (
     metadata: Crypted,
     data: Crypted,
 ) => {
     const clearMetadata = decrypt(metadata);
     console.log('clearMetadata', clearMetadata);
-    console.log('clearMetadata files', clearMetadata.message?.attachments);
 
     const clearData = decrypt(data);
     console.log('clearData', clearData);
+
+
+    saveAttachments(clearMetadata);
 }
 
 
@@ -93,7 +118,9 @@ const handleRequest = async (
 const main = async () => {
     const server = express();
 
-    server.use(jsonParser());
+    server.use(jsonParser({
+        limit: '25mb',
+    }));
 
 
     server.post('/rest', async (request, response) => {
