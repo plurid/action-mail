@@ -28,6 +28,8 @@ export interface ParserOptions {
 
     /**
      * Use `camelCase` for all the keys.
+     *
+     * Default: `false`
      */
     camelCaseKeys: boolean;
 
