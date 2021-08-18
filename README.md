@@ -156,8 +156,7 @@ Deliver with the following shipment details
 
 
 Thanks
-`,
-);
+`);
 ```
 
 which when parsed with the following settings
