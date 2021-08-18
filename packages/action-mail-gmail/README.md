@@ -25,9 +25,9 @@
 
 
 
-`action mail` provides a specification, parsing tools, and client mail utilities to obtain `action entities` and/or `action values` from mails.
+`action mail` provides a specification, parsing tools, and client mail utilities to obtain `action entities` and/or `action variables` from mails.
 
-`action entities` have `true` or `false` values. `action values` have string values.
+`action entities` have `true` or `false` values. `action variables` have string values.
 
 `action mail`s are intended to be used for `accountless interactions`.
 
@@ -56,13 +56,13 @@ An user could desire to be `accountless` and at the same time be interested in a
 
 An `action mail field` is enclosed in `{` and `}`, or in `[` and `]`, or in other characters that have a general delimiting semantic.
 
-An `action mail field` can be an `action entity` or an `action value`.
+An `action mail field` can be an `action entity` or an `action variable`.
 
 The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated using common language: don't, no, none; e.g. `{don't send}`.
 
-The `action mail value` expects a value after the colon, e.g. `{name: one}`, `{zip code: 012345}`.
+The `action mail variables` expects a value after the colon, e.g. `{name: one}`, `{zip code: 012345}`.
 
-An `action mail field` can have multiple `entities` or `values`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s.
+An `action mail field` can have multiple `entities` or `variables`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s.
 
 
 
@@ -85,7 +85,7 @@ const requestSubject = encodeURIComponent(
 );
 
 const requestBody = encodeURIComponent(
-    `Hello,\n\nfrom body text\n{using} an {action: mail} to {specify: values} and {entities}.\n`,
+    `Hello,\n\nfrom body text\n{using} an {action: mail} to {specify: variables} and {entities}.\n`,
 );
 
 const BuyWithoutAccount = () => (
@@ -107,7 +107,7 @@ Subject: Hello from subject text
 Body: Hello,
 
 from body text
-{using} an {action: mail} to {specify: values} and {entities}.
+{using} an {action: mail} to {specify: variables} and {entities}.
 ```
 
 After the mail reaches the destination, it will be parsed and the following data structures is obtained
@@ -116,7 +116,7 @@ After the mail reaches the destination, it will be parsed and the following data
 {
     "using": true,
     "action": "mail",
-    "specify": "values",
+    "specify": "variables",
     "entities": true
 }
 ```
