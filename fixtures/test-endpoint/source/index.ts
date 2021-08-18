@@ -19,14 +19,15 @@ const main = async () => {
     server.use(jsonParser());
 
 
-    server.get('/rest', (request, response) => {
+    server.post('/rest', (request, response) => {
         console.log('rest endpoint hit', request.body);
 
         response.end();
     });
 
-    server.get('/graphql', (request, response) => {
+    server.post('/graphql', (request, response) => {
         console.log('graphql endpoint hit', request.body);
+        console.log('input', request.body.variables.input);
 
         response.end();
     });
