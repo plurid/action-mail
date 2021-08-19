@@ -58,7 +58,7 @@ export const getEvents = (
 
                 const successText = success
                     ? '[sent]'
-                    : '[error';
+                    : '[error]';
 
                 const cleanSender = sender
                     .replace('<', '&lt;')
