@@ -25,7 +25,7 @@
 
 
 
-`action mail` provides a specification, parsing tools, and client mail utilities to obtain `action entities` and/or `action variables` from mails, messages, or other user input.
+`action mail` provides a specification, parsing tools, and mail client utilities to obtain `action entities` and/or `action variables` from mails, messages, or other user input.
 
 `action entities` have `true` or `false` values. `action variables` have string values.
 
@@ -54,15 +54,15 @@ An user could desire to be `accountless` and at the same time be interested in a
 
 ## Syntax
 
-An `action mail field` content is enclosed in `{` and `}`, or in `[` and `]`, or in other characters that have a general delimiting semantic, customizable and specified by the service implementing action mails.
+An `action mail field content` is enclosed in `{` and `}`, or in `[` and `]`, or in other characters that have a general delimiting semantic, customizable and specified by the service implementing action mails. The `action mail field content` can have one or more `action mail field token`s.
 
-A singular `action mail field` can be an `action entity` or an `action variable`.
+An `action mail field token` can be an `action mail entity` or an `action mail variable`.
 
 The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated by prefixing the token with common language words: `don't`, `no`, `none`; e.g. `{don't send}`. The negations can be extended and specified by the service implementing action mails.
 
-The `action mail variables` expect a value after the colon, e.g. `{name: one}`, `{zip code: 012345}`.
+The `action mail variables` expect a string value after the colon, e.g. `{name: one}`, `{zip code: 012345}`. The value is generally left to be filled by the user, but it can contain predefined values. Parsing of the string value into types, i.e. numbers, is left to the service implementing action mails.
 
-An `action mail field` can have multiple `entities` and/or `variables`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s.
+An `action mail field` can have multiple `entities` and/or `variables`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s. The `spacer`s are customizable and specified by the service implementing action mails.
 
 
 
