@@ -6,6 +6,7 @@
 
     import {
         negations,
+        defaultGroupsKey,
     } from '~data/constants';
 
     import {
@@ -143,7 +144,7 @@ export const groupParse = <T = any>(
 
 
     if (groups.length > 0) {
-        const groupsKey = options?.groupsKey || 'groups';
+        const groupsKey = options?.groupsKey || defaultGroupsKey;
 
         interpreted[groupsKey] = groups;
     }

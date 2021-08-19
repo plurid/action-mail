@@ -16,6 +16,8 @@ export interface ParserOptions {
      * Delimiting string between multiple fields within the same action mail group.
      *
      * e.g. `{one: two · three: four}` with `·` as spacer.
+     *
+     * Default: none
      */
     spacer: string;
 
@@ -38,7 +40,7 @@ export interface ParserOptions {
      *
      * The first element marks field start, the second element marks field end.
      *
-     * Default `[ ['{', '}'] ]`
+     * Default: `[ ['{', '}'] ]`
      */
     fielders: string[][];
 
@@ -46,6 +48,8 @@ export interface ParserOptions {
      * Negation words (strings or regular expressions) to negate the value of a field.
      *
      * e.g. `{no foo}` gives `{ foo: false }`.
+     *
+     * Default: `[ 'no', 'not', 'none', 'don\'t', 'do not' ]`
      */
     negations: Negation[];
 }

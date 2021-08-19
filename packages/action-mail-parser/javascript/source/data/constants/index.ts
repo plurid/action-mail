@@ -9,6 +9,9 @@
 
 
 // #region module
+export const defaultGroupsKey = 'groups';
+
+
 export const defaultFielders = [
     ['{', '}'],
 ];
