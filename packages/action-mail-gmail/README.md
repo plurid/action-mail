@@ -321,11 +321,12 @@ To use the Action Mail, `Add Mail` providing the required information: `to mail`
 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/presentation/action-mail-gmail-add.png" height="700px">
+    <img src="https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/presentation/action-mail-gmail-add.png" height="800px">
 </p>
 
 
 The `to mail` is the mail which receives action mails, if multiple mails configured in Gmail, e.g. `example@gmail.com`.
+
 
 The `endpoint` is a `https` API endpoint, e.g. `https://api.example.com`. The endpoint can be `REST` or `GraphQL`.
 
@@ -352,9 +353,11 @@ type ActionMailResponse {
 }
 ```
 
+
 The `token` is generated and will be checked on the `endpoint`-side and can be attached to the `payload` or added as a `bearer` header, e.g. `Authorization: Bearer <token>`.
 
 Due to a limitation in dynamically whitelisting URLs for the [URL Fetch Google Apps Script Service](https://developers.google.com/apps-script/manifest#Manifest.FIELDS.urlFetchWhitelist), the configured `endpoint` will be called from `https://api.plurid.com`.
+
 
 The `public key` will be used to encrypt the `data` and `metadata` on the add-on side.
 
@@ -486,6 +489,9 @@ const decrypt = (
     return load;
 }
 ```
+
+
+The `gateway token` is required to use extended features, such as increased bandwidth to account for attachments. See more on [plurid.com/action-mail](https://plurid.com/action-mail).
 
 
 The `attachments`, if any, can be saved to the filesystem, given the correctly `JSON.parse`d `metadata` object.
