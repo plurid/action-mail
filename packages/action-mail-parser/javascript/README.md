@@ -56,7 +56,7 @@ An user could desire to be `accountless` and at the same time be interested in a
 
 An `action mail field` content is enclosed in `{` and `}`, or in `[` and `]`, or in other characters that have a general delimiting semantic, customizable and specified by the service implementing action mails.
 
-An `action mail field` can be an `action entity` or an `action variable`.
+A singular `action mail field` can be an `action entity` or an `action variable`.
 
 The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated using common language: `don't`, `no`, `none`; e.g. `{don't send}`.
 
