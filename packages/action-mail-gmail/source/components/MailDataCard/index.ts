@@ -24,6 +24,7 @@ const MailDataCard = (
     const endpointValue = data?.endpoint || '';
     const tokenValue = data?.token || '';
     const publicKeyValue = data?.publicKey || '';
+    const gatewayTokenValue = data?.gatewayToken || '';
     const useAttachmentsValue = data?.useAttachments ?? false;
     const parseSubjectValue = data?.parseSubject ?? false;
     const spacerValue = data?.spacer || '';
@@ -86,6 +87,13 @@ const MailDataCard = (
         .setTitle('public key')
         .setMultiline(true)
         .setValue(publicKeyValue);
+
+
+    const gatewayToken = CardService.newTextInput()
+        .setFieldName('gatewayToken')
+        .setOnChangeAction(onChangeAction)
+        .setTitle('gateway token')
+        .setValue(gatewayTokenValue);
 
 
     const useAttachmentsSwitch = CardService.newSwitch()
@@ -179,6 +187,7 @@ const MailDataCard = (
         .addWidget(token)
         .addWidget(tokenType)
         .addWidget(publicKey)
+        .addWidget(gatewayToken)
         .addWidget(useAttachments)
         .addWidget(parseSubject)
         .addWidget(spacer)

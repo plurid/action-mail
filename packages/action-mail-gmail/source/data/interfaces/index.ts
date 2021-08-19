@@ -7,6 +7,7 @@ export interface MailConfiguration {
     tokenType: string;
     publicKey: string;
     parseSubject?: boolean;
+    gatewayToken?: string;
     useAttachments?: boolean;
     spacer?: string;
     camelCaseKeys?: boolean;

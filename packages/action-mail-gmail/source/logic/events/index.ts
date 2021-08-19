@@ -11,8 +11,11 @@
 
     import {
         generateMetadata,
+    } from '~logic/messageMetadata';
+
+    import {
         sendMessage,
-    } from '../mails';
+    } from '~logic/sendMessage';
     // #endregion external
 // #endregion imports
 

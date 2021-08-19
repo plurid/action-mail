@@ -2,6 +2,11 @@
 // Maximum number of threads to process per run.
 export const PAGE_SIZE = 150;
 
+export const INSTALL_TRIGGER_NAME = 'handleNewMails';
+
+export const INSTALL_INTERVAL = 1; // minutes
+
+
 
 export const BASE_ASSETS_URL = 'https://raw.githubusercontent.com/plurid/action-mail/master/about/';
 
