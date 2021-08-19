@@ -321,7 +321,7 @@ To use the Action Mail, `Add Mail` providing the required information: `to mail`
 
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/presentation/action-mail-gmail-add.png" height="800px">
+    <img src="https://raw.githubusercontent.com/plurid/action-mail/master/about/clients/presentation/action-mail-gmail-add.png" height="900px">
 </p>
 
 
