@@ -58,7 +58,7 @@ An `action mail field` content is enclosed in `{` and `}`, or in `[` and `]`, or
 
 A singular `action mail field` can be an `action entity` or an `action variable`.
 
-The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated using common language: `don't`, `no`, `none`; e.g. `{don't send}`.
+The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated by prefixing the token with common language words: `don't`, `no`, `none`; e.g. `{don't send}`. The negations can be extended and specified by the service implementing action mails.
 
 The `action mail variables` expect a value after the colon, e.g. `{name: one}`, `{zip code: 012345}`.
 
