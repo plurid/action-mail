@@ -144,6 +144,10 @@ const main = async () => {
     });
 
     server.post('/graphql', async (request, response) => {
+        // response.json({
+        //     status: false,
+        //     error: 'gateway error',
+        // });
         response.json({
             status: true,
         });
