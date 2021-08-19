@@ -50,15 +50,20 @@ export const getEvents = (
                 const {
                     id,
                     success,
+                    error,
                     data,
                     sentAt,
                     sender,
                 } = eventData;
 
 
+                const errorString = error
+                    ? ` · ${error}`
+                    : '';
+
                 const successText = success
-                    ? '[sent]'
-                    : '[error]';
+                    ? `[sent${errorString}]`
+                    : `[error${errorString}]`;
 
                 const cleanSender = sender
                     .replace('<', '&lt;')

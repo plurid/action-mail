@@ -24,6 +24,23 @@
 
 
 // #region module
+export const parseResponse = (
+    text: string,
+) => {
+    try {
+        const response = JSON.parse(text);
+
+        return {
+            ...response,
+        };
+    } catch (error) {
+        return {
+            error: 'unparseable',
+        };
+    }
+}
+
+
 export const sendMessage = (
     metadata: Metadata,
     data: any,
@@ -90,13 +107,21 @@ export const sendMessage = (
         const post = UrlFetchApp.fetch(API_ENDPOINT, options);
         const responseCode = post.getResponseCode();
 
-        if (responseCode === 200) {
+        const text = post.getContentText();
+        const response = parseResponse(text);
+
+        if (responseCode === 200 && response.status) {
             sentMail.success = true;
+        }
+
+        if (response.error) {
+            sentMail.error = response.error;
         }
 
         propertiesAddEvent(sentMail);
     } catch (error) {
         sentMail.success = false;
+        sentMail.error = 'unreachable';
         propertiesAddEvent(sentMail);
     }
 }

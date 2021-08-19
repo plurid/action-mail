@@ -49,6 +49,7 @@ export interface MetadataMessage {
 
 export interface SentMailEvent {
     success: boolean;
+    error?: string;
     data: any;
     messageID: string;
     id: string;
