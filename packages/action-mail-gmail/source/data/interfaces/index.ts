@@ -57,4 +57,21 @@ export interface SentMailEvent {
     sender: string;
     receiver: string;
 }
+
+
+export interface CryptedValue {
+    text: string;
+    aes: string;
+}
+
+
+export interface ActionMailCall {
+    data: CryptedValue;
+    metadata: CryptedValue;
+    endpoint: string;
+    endpointType: string;
+    token: string | undefined;
+    tokenType: string;
+    gatewayToken: string | undefined;
+}
 // #endregion module

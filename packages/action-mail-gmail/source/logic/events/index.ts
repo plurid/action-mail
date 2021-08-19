@@ -66,6 +66,7 @@ export function resendEvent(
         token,
         tokenType,
         publicKey,
+        gatewayToken,
     } = config;
 
     const metadata = generateMetadata(
@@ -82,6 +83,7 @@ export function resendEvent(
         token,
         tokenType,
         publicKey,
+        gatewayToken,
     );
 
     return refreshEventCard(mail);

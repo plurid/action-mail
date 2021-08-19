@@ -75,6 +75,7 @@ export function handleMessage(
         token,
         tokenType,
         publicKey,
+        gatewayToken,
         parseSubject,
         spacer,
         camelCaseKeys,
@@ -111,6 +112,7 @@ export function handleMessage(
         token,
         tokenType,
         publicKey,
+        gatewayToken,
     );
 
 

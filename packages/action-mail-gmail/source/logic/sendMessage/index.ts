@@ -3,6 +3,7 @@
     import {
         SentMailEvent,
         Metadata,
+        ActionMailCall,
     } from '~data/interfaces';
 
     import {
@@ -31,16 +32,17 @@ export const sendMessage = (
     token: string,
     tokenType: string,
     publicKey: string,
+    gatewayToken: string | undefined,
 ) => {
-    const actionMail = {
+    const actionMail: ActionMailCall = {
         metadata: encrypt(metadata, publicKey),
         data: encrypt(data, publicKey),
         endpoint,
         endpointType,
+        token,
+        tokenType,
+        gatewayToken,
     };
-    if (tokenType === 'payload') {
-        actionMail['token'] = token;
-    }
 
 
     let headers = {};
