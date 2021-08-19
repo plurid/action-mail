@@ -64,6 +64,8 @@ The `action mail variables` expect a string value after the colon, e.g. `{name: 
 
 An `action mail field` can have multiple `entities` and/or `variables`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s. The `spacer`s are customizable and specified by the service implementing action mails.
 
+The leading and trailing whitespace is trimmed from action mail field `entities` and `variables`, e.g. `{     pay  }` will be parsed as `{ pay: true }`; `{   one:   two  }` will be parsed as `{ one: 'two' }`.
+
 
 
 ## Usage
