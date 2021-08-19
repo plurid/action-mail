@@ -36,16 +36,12 @@
         "clean": "rimraf ./distribution",
         "lint": "eslint ./source --ext .ts,.tsx",
         "test": "jest ./source --config ./configurations/jest.config.js --rootDir ./",
-        "start": "node distribution/index.js",
-        "start.local": "deon environment ./environment/.env.local.deon -- node distribution/index.js",
-        "build.development": "yarn clean && rollup -c ./scripts/rollup.config.js --environment ENV_MODE:local",
         "build.production": "rollup -c ./scripts/rollup.config.js --environment ENV_MODE:production",
         "build.removeTests": "rimraf `find ./distribution/ -type d -name __tests__`",
         "build": "yarn clean && yarn build.production && yarn build.removeTests",
         "prepublishOnly": "yarn build"
     },
     "devDependencies": {
-        "@plurid/deon": "^0.0.0-4",
         "@types/jest": "^26.0.24",
         "@types/node": "^16.4.2",
         "@typescript-eslint/eslint-plugin": "^4.28.4",
