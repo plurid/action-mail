@@ -62,6 +62,22 @@ describe('parser', () => {
         expect(values.four).toBe(false);
     });
 
+    it(`parses custom negations`, () => {
+        const data = `one {two} three {customnot four}`;
+        const values = parser(
+            data,
+            {
+                negations: [
+                    'customnot',
+                ],
+            },
+        );
+
+        expect(Object.values(values).length).toBe(2);
+        expect(values.two).toBe(true);
+        expect(values.four).toBe(false);
+    });
+
     it(`parses multiple fielders`, () => {
         const data = `one {two} three [four]`;
         const values = parser(
