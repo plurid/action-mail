@@ -29,7 +29,7 @@
 
 `action entities` have `true` or `false` values. `action variables` have string values.
 
-`action mail`s are intended to be used for `accountless interactions`.
+`action mail`s are intended to be used for `accountless interactions`, however the parsing functionality can be used to extract and perform actions for fully authenticated users using any realtime communication channel.
 
 An user is `accountless` when interacting with an internet service without being expressly identified to/for that service.
 
