@@ -126,7 +126,9 @@ const main = async () => {
 
 
     server.post('/rest', async (request, response) => {
-        response.end();
+        response.json({
+            status: true,
+        });
 
         console.log('rest endpoint hit', request.body);
 
@@ -142,7 +144,9 @@ const main = async () => {
     });
 
     server.post('/graphql', async (request, response) => {
-        response.end();
+        response.json({
+            status: true,
+        });
 
         console.log('graphql endpoint hit', request.body);
 
