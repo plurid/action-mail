@@ -17,7 +17,7 @@ export const defaultFielders = [
 ];
 
 
-export const negations: Negation[] = [
+export const defaultNegations: Negation[] = [
     `no`,
     `not`,
     `none`,

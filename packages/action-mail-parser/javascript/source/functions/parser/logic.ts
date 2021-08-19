@@ -5,7 +5,7 @@
     } from '~data/interfaces';
 
     import {
-        negations,
+        defaultNegations,
         defaultGroupsKey,
     } from '~data/constants';
 
@@ -22,6 +22,8 @@ export const valueOfToken = (
     token: string,
     options?: Partial<ParserOptions>,
 ) => {
+    const negations = options?.negations || defaultNegations;
+
     const indexOfColon = token.indexOf(':');
 
     if (indexOfColon === -1) {
