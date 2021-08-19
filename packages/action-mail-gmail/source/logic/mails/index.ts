@@ -37,11 +37,15 @@ export function getUnreadMails() {
         const threads = GmailApp.search('is:unread', 0, PAGE_SIZE);
 
         for (let i = 0; i < threads.length; i++) {
-            const thread = threads[i];
+            try {
+                const thread = threads[i];
 
-            const messages = thread.getMessages()
-            const message = messages[0];
-            handleMessage(message);
+                const messages = thread.getMessages()
+                const message = messages[0];
+                handleMessage(message);
+            } catch (error) {
+                continue;
+            }
         }
     }
 }
@@ -98,8 +102,7 @@ export const getFielders = (
 }
 
 
-export const generateAESKey = (
-) => {
+export const generateAESKey = () => {
     return uuid();
 }
 
@@ -187,17 +190,8 @@ export const sendMessage = (
         headers,
     };
 
-    const post = UrlFetchApp.fetch(API_ENDPOINT, options);
-    const responseCode = post.getResponseCode();
-
-    let success = true;
-    if (responseCode !== 200) {
-        success = false;
-    }
-
-
     const sentMail: SentMailEvent = {
-        success,
+        success: false,
         data,
         id: metadata.id,
         messageID: metadata.message.id,
@@ -206,7 +200,20 @@ export const sendMessage = (
         sender: metadata.message.sender,
         receiver: metadata.message.receiver,
     };
-    propertiesAddEvent(sentMail);
+
+    try {
+        const post = UrlFetchApp.fetch(API_ENDPOINT, options);
+        const responseCode = post.getResponseCode();
+
+        if (responseCode === 200) {
+            sentMail.success = true;
+        }
+
+        propertiesAddEvent(sentMail);
+    } catch (error) {
+        sentMail.success = false;
+        propertiesAddEvent(sentMail);
+    }
 }
 
 
