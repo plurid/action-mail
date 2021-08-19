@@ -17,6 +17,7 @@
     // #region internal
     import {
         privateKey,
+        keyPassphrase,
     } from './keys';
     // #endregion internal
 // #endregion imports
@@ -40,6 +41,7 @@ const decryptAes = (
         {
             key: privateKey,
             padding: crypto.constants.RSA_PKCS1_PADDING,
+            passphrase: keyPassphrase,
         },
         Buffer.from(aes, 'base64'),
     );
