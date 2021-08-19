@@ -60,7 +60,7 @@ An `action mail field token` can be an `action mail entity` or an `action mail v
 
 The `action mail entity` expresses the truth or falseness of a concept, e.g. `{send}`, `{generate}`. `action mail entities` can be negated by prefixing the token with common language words: `don't`, `no`, `none`; e.g. `{don't send}`. The negations can be extended and specified by the service implementing action mails.
 
-The `action mail variables` expect a string value after the colon, e.g. `{name: one}`, `{zip code: 012345}`. The value is generally left to be filled by the user, but it can contain predefined values. Parsing of the string value into types, i.e. numbers, is left to the service implementing action mails.
+The `action mail variables` expect a string value after the colon, e.g. `{name: one}`, `{zip code: 012345}`. The value is generally left to be filled by the user, but it can contain predefined values. Parsing of the string value into types, i.e. numbers, is left to the service implementing action mails, e.g. `{ one: 123 }` is parsed as `{ one: '123' }`.
 
 An `action mail field` can have multiple `entities` and/or `variables`, using a `spacer` to distinguish them, e.g. `{send · name: one}`, `{generate, don't send}`, with `·` and `,` acting as `spacer`s. The `spacer`s are customizable and specified by the service implementing action mails.
 
@@ -77,6 +77,7 @@ is parsed as `{ pay: true }` and
 ```
 
 is parsed as `{ one: 'two' }`.
+
 
 
 ## Usage
