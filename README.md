@@ -433,14 +433,20 @@ interface Crypted {
 }
 
 
+const privateKey = `-----BEGIN RSA PRIVATE KEY-----...`;
+const keyPassphrase = 'secretPassphrase';
+
+
 const decryptAes = (
     aes: string,
     privateKey: string,
+    keyPassphrase: string,
 ) => {
     const aesKey = crypto.privateDecrypt(
         {
             key: privateKey,
             padding: crypto.constants.RSA_PKCS1_PADDING,
+            passphrase: keyPassphrase,
         },
         Buffer.from(aes, 'base64'),
     );
@@ -466,11 +472,10 @@ const decrypt = (
         text,
     } = crypted;
 
-    const privateKey = `-----BEGIN RSA PRIVATE KEY-----...`;
-
     const aesKey = decryptAes(
         aes,
         privateKey,
+        keyPassphrase,
     );
 
     const load = decryptLoad(
