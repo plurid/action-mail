@@ -54,7 +54,7 @@ An user could desire to be `accountless` and at the same time be interested in a
 
 ## Syntax
 
-An `action mail field` is enclosed in `{` and `}`, or in `[` and `]`, or in other characters that have a general delimiting semantic, customizable by the service implementing action mails.
+An `action mail field` content is enclosed in `{` and `}`, or in `[` and `]`, or in other characters that have a general delimiting semantic, customizable and specified by the service implementing action mails.
 
 An `action mail field` can be an `action entity` or an `action variable`.
 
